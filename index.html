@@ -65,46 +65,131 @@
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
   }
   .brand-logo {
-    display: flex; align-items: center; gap: 10px;
+    display: flex; align-items: center; gap: 12px;
     text-decoration: none; color: inherit; flex-shrink: 0;
   }
-  .logo-icon {
-    width: 36px; height: 36px; border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
-    font-size: 18px; font-weight: 800; color: #040711;
+  .logo-3d-wrap {
+    width: 42px; height: 42px; border-radius: 12px; position: relative; overflow: hidden; flex-shrink: 0;
+    background: #030712;
+    border: 1.5px solid rgba(6, 182, 212, 0.55);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 20px rgba(6, 182, 212, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .logo-3d-img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
+  }
+  .brand-logo:hover .logo-3d-wrap {
+    transform: translateY(-2px) scale(1.05) rotate(-2deg);
+    border-color: rgba(56, 189, 248, 0.9);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 28px rgba(6, 182, 212, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+  .brand-logo:hover .logo-3d-img {
+    transform: scale(1.1);
+  }
+  .brand-text-wrap {
+    display: flex; flex-direction: column;
   }
   .brand-text {
-    font-family: var(--font-heading); font-size: 20px; font-weight: 800; letter-spacing: -0.5px;
+    font-family: var(--font-heading); font-size: 20px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.1;
   }
   .brand-text span {
     background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
     -webkit-background-clip: text; color: transparent;
   }
-  .iso-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35);
-    color: #34D399; font-size: 11px; font-weight: 700; padding: 4px 10px;
-    border-radius: 99px; font-family: var(--font-mono); text-transform: uppercase;
+  .brand-subtext {
+    font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; color: #38BDF8; letter-spacing: 0.12em; line-height: 1; margin-top: 3px;
   }
+
+  /* 3D Physical ISO / CISO Accreditation Medal Badge With Pro Drop-Shadow */
+  .iso-badge-3d-btn {
+    display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.14) 0%, rgba(6, 182, 212, 0.08) 50%, rgba(3, 7, 18, 0.9) 100%);
+    border: 1.5px solid rgba(16, 185, 129, 0.45);
+    border-radius: 99px; padding: 4px 14px 4px 6px;
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.7), 0 2px 10px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(12px);
+    user-select: none;
+  }
+  .iso-badge-3d-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    border-color: rgba(52, 211, 153, 0.85);
+    box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.8), 0 0 24px rgba(16, 185, 129, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+  .iso-badge-3d-btn:active {
+    transform: translateY(1px) scale(0.99);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  }
+  .iso-medal-disc {
+    width: 32px; height: 32px; border-radius: 50%; position: relative; flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 14px rgba(16, 185, 129, 0.4);
+  }
+  .iso-medal-img {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;
+    border: 1.5px solid rgba(251, 191, 36, 0.75);
+  }
+  .iso-medal-info {
+    display: flex; flex-direction: column; text-align: left;
+  }
+  .iso-medal-header {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .iso-medal-status {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 800; color: #34D399; letter-spacing: 0.05em; line-height: 1.1;
+  }
+  .iso-medal-audit {
+    font-size: 10px; font-weight: 600; color: #94A3B8; line-height: 1.1; margin-top: 2px;
+  }
+
   .private-badge {
     display: inline-flex; align-items: center; gap: 6px;
     background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.35);
-    color: #FB7185; font-size: 11px; font-weight: 700; padding: 4px 10px;
+    color: #FB7185; font-size: 11px; font-weight: 700; padding: 5px 12px;
     border-radius: 99px; font-family: var(--font-mono); text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   .pulse-dot { width: 7px; height: 7px; background: #34D399; border-radius: 50%; box-shadow: 0 0 8px #34D399; animation: pulseGlow 2s infinite; }
   @keyframes pulseGlow { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
 
+  /* Tactile 3D Navigation Links */
   .nav-links {
-    display: flex; align-items: center; gap: 18px;
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(11, 18, 33, 0.75); padding: 5px 8px; border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 4px 14px rgba(0, 0, 0, 0.3);
   }
   .nav-links a {
-    color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 600;
-    transition: color 0.2s; white-space: nowrap;
+    color: var(--text-muted); text-decoration: none; font-size: 12.5px; font-weight: 700;
+    padding: 7px 13px; border-radius: 10px;
+    transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap; border: 1px solid transparent;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent;
   }
-  .nav-links a:hover { color: #FFF; }
+  .nav-links a:hover {
+    color: #FFF;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  .nav-links a:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  .nav-links a.nav-audit-link {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #34D399;
+  }
+  .nav-links a.nav-audit-link:hover {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(52, 211, 153, 0.6);
+    color: #A7F3D0;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+  }
 
   @media (max-width: 1020px) {
     .nav-links { display: none; }
@@ -130,6 +215,28 @@
   /* Hero Section */
   section.hero {
     padding: 65px 0 45px; text-align: center; position: relative;
+  }
+  .hero-pill-3d {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, rgba(168, 85, 247, 0.08) 50%, rgba(16, 185, 129, 0.1) 100%);
+    border: 1.5px solid rgba(6, 182, 212, 0.4);
+    padding: 6px 18px; border-radius: 99px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    margin-bottom: 24px;
+    transition: all 0.25s ease;
+  }
+  .hero-pill-3d:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 25px rgba(6, 182, 212, 0.35);
+  }
+  .hero-pill-badge {
+    background: linear-gradient(135deg, var(--accent-cyan), #0284C7);
+    color: #030712; font-family: var(--font-mono); font-size: 10.5px; font-weight: 800;
+    padding: 2px 8px; border-radius: 99px; letter-spacing: 0.06em;
+    box-shadow: 0 2px 6px rgba(6, 182, 212, 0.4);
+  }
+  .hero-pill-text {
+    font-size: 12.5px; font-weight: 700; color: #E0F2FE; font-family: var(--font-mono); letter-spacing: 0.02em;
   }
   .hero-pill {
     display: inline-flex; align-items: center; gap: 8px;
@@ -208,46 +315,77 @@
     margin-top: 20px;
   }
 
-  /* Branch Navigation Bar */
+  /* Master Branch Navigation Bar - Real Tactile 3D Switches */
   .branch-tabs-nav {
-    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
-    background: rgba(3, 7, 18, 0.7); padding: 8px; border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 30px;
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    background: linear-gradient(180deg, rgba(3, 7, 18, 0.95) 0%, rgba(11, 18, 33, 0.9) 100%);
+    padding: 10px; border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.7), 0 15px 35px rgba(0, 0, 0, 0.5);
+    margin-bottom: 32px;
   }
   .branch-tab-btn {
     display: flex; align-items: center; gap: 10px;
-    padding: 12px 22px; border-radius: 12px; font-size: 13.5px; font-weight: 700;
-    color: var(--text-muted); background: transparent; border: 1px solid transparent;
-    cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 13px 24px; border-radius: 14px; font-size: 13.5px; font-weight: 700;
+    color: var(--text-muted);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    cursor: pointer; transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
     font-family: var(--font-heading);
+    position: relative; overflow: hidden;
   }
   .branch-tab-btn:hover {
-    color: #FFF; background: rgba(255, 255, 255, 0.05);
+    color: #FFF;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  .branch-tab-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   }
   .branch-tab-btn.active-tab {
-    color: #FFF; background: rgba(18, 27, 49, 0.95);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    color: #FFF;
+    border-bottom-width: 3px;
+    transform: translateY(-1px);
   }
   .branch-tab-btn.active-tab.tab-winnow {
-    border-color: rgba(168, 85, 247, 0.6); box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
-    color: #E9D5FF;
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.28) 0%, rgba(20, 10, 38, 0.95) 100%);
+    border-color: rgba(168, 85, 247, 0.85);
+    border-bottom-color: #7E22CE;
+    box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.35), 0 8px 25px rgba(168, 85, 247, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    color: #F3E8FF;
   }
   .branch-tab-btn.active-tab.tab-rescue {
-    border-color: rgba(16, 185, 129, 0.6); box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
-    color: #A7F3D0;
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.28) 0%, rgba(6, 32, 22, 0.95) 100%);
+    border-color: rgba(16, 185, 129, 0.85);
+    border-bottom-color: #047857;
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.35), 0 8px 25px rgba(16, 185, 129, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    color: #D1FAE5;
   }
   .branch-tab-btn.active-tab.tab-inbox {
-    border-color: rgba(6, 182, 212, 0.6); box-shadow: 0 0 25px rgba(6, 182, 212, 0.25);
-    color: #BAE6FD;
+    background: linear-gradient(180deg, rgba(6, 182, 212, 0.28) 0%, rgba(4, 28, 38, 0.95) 100%);
+    border-color: rgba(6, 182, 212, 0.85);
+    border-bottom-color: #0284C7;
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.35), 0 8px 25px rgba(6, 182, 212, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    color: #E0F2FE;
   }
   .branch-tab-btn.active-tab.tab-overview {
-    border-color: rgba(245, 158, 11, 0.6); box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
-    color: #FDE68A;
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.28) 0%, rgba(38, 24, 6, 0.95) 100%);
+    border-color: rgba(245, 158, 11, 0.85);
+    border-bottom-color: #B45309;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.35), 0 8px 25px rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    color: #FEF3C7;
   }
-
   .tab-pill-badge {
-    font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 6px;
+    font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px;
     font-family: var(--font-mono); text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   /* Branch Page Views Container */
@@ -459,16 +597,31 @@
   }
   .modal-close-btn:hover { background: rgba(255, 255, 255, 0.2); }
 
-  /* Tabbed Dashboards */
+  /* Tabbed Dashboards - Tactile 3D Tabs */
   .dash-tabs {
     display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; overflow-x: auto;
   }
   .dash-tab-btn {
-    padding: 8px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; background: transparent;
-    border: 1px solid transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    padding: 9px 20px; border-radius: 12px; font-size: 13px; font-weight: 700;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+    color: var(--text-muted); cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1); white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  .dash-tab-btn:hover {
+    color: #FFF; transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
   .dash-tab-btn.active {
-    background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #34D399;
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.25) 0%, rgba(6, 32, 22, 0.9) 100%);
+    border-color: rgba(16, 185, 129, 0.8);
+    border-bottom: 3px solid #047857;
+    color: #A7F3D0;
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3), 0 6px 18px rgba(16, 185, 129, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
   /* Forms */
@@ -486,6 +639,18 @@
     background: #02050E radial-gradient(circle at 50% 30%, rgba(6, 182, 212, 0.12) 0%, transparent 60%);
     display: flex; align-items: center; justify-content: center; padding: 20px;
     backdrop-filter: blur(25px);
+  }
+  .gate-logo-3d {
+    width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 16px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(6, 182, 212, 0.5);
+    border: 2px solid rgba(6, 182, 212, 0.6);
+    animation: gateLogoFloat 4s ease-in-out infinite;
+  }
+  .gate-logo-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @keyframes gateLogoFloat {
+    0%, 100% { transform: translateY(0); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(6, 182, 212, 0.5); }
+    50% { transform: translateY(-5px); box-shadow: 0 18px 36px rgba(0, 0, 0, 0.8), 0 0 35px rgba(6, 182, 212, 0.7); }
   }
   .gate-box {
     background: rgba(11, 18, 33, 0.95); border: 1px solid rgba(6, 182, 212, 0.4);
@@ -507,8 +672,8 @@
   <!-- FULL-SCREEN PRIVATE MODE VAULT GATE (ACTIVE PAR DÉFAUT) -->
   <div id="privateVaultGate" style="display: flex;">
     <div class="gate-box">
-      <div style="width: 58px; height: 58px; border-radius: 16px; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);">
-        🛡️
+      <div class="gate-logo-3d">
+        <img src="guards_labs_logo.jpg" alt="Guards Labs Logo UHD" class="gate-logo-img">
       </div>
       
       <div class="private-badge" style="margin-bottom: 12px;">
@@ -545,15 +710,29 @@
   <!-- Top Navigation (Clean & Fixed) -->
   <header class="top-nav">
     <div class="wrap nav-inner">
-      <a href="/" class="brand-logo">
-        <div class="logo-icon">🛡️</div>
-        <div class="brand-text">Guards<span>Labs</span></div>
+      <a href="/" class="brand-logo" title="Guards Labs - Accueil">
+        <div class="logo-3d-wrap">
+          <img src="guards_labs_logo.jpg" alt="Guards Labs UHD" class="logo-3d-img">
+        </div>
+        <div class="brand-text-wrap">
+          <div class="brand-text">Guards<span>Labs</span></div>
+          <div class="brand-subtext">CYBER-DEFENSE & FINOPS</div>
+        </div>
       </a>
       
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <div class="iso-badge">
-          <span class="pulse-dot"></span>
-          <span>ISO 27001 & SOC 2 Ready</span>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <!-- 3D Physical ISO / CISO Accreditation Medal Badge -->
+        <div class="iso-badge-3d-btn" onclick="openIsoModal(event)" title="Consulter l'Attestation & Rapport d'Audit CISO">
+          <div class="iso-medal-disc">
+            <img src="iso_badge_3d.jpg" alt="Accréditation 3D CISO & SOC 2" class="iso-medal-img">
+          </div>
+          <div class="iso-medal-info">
+            <div class="iso-medal-header">
+              <span class="pulse-dot"></span>
+              <span class="iso-medal-status">ACCRÉDITÉ TIER-4</span>
+            </div>
+            <div class="iso-medal-audit">Audit CISO Vérifié ↗</div>
+          </div>
         </div>
         <div class="private-badge" id="navPrivateIndicator">
           🔒 Enclave Privée
@@ -561,13 +740,13 @@
       </div>
 
       <nav class="nav-links">
-        <a href="#branches" onclick="selectBranchTab('winnow')">⚡ Winnow</a>
-        <a href="#branches" onclick="selectBranchTab('rescue')">💳 Rescue</a>
-        <a href="#branches" onclick="selectBranchTab('inbox')">🛡️ InboxGuard</a>
-        <a href="#simulator">Simulateur ROI</a>
-        <a href="#comparatif">Comparatif Marché</a>
-        <a href="#pricing">Pack Triple</a>
-        <a href="#" onclick="openIsoModal(event)">ISO 27001</a>
+        <a href="#branches" onclick="selectBranchTab('winnow')" title="Branche Cloud FinOps">⚡ Winnow</a>
+        <a href="#branches" onclick="selectBranchTab('rescue')" title="Branche Stripe Dunning">💳 Rescue</a>
+        <a href="#branches" onclick="selectBranchTab('inbox')" title="Branche Email DNS Security">🛡️ InboxGuard</a>
+        <a href="#simulator">📊 Simulateur ROI</a>
+        <a href="#comparatif">⚖️ Comparatif Marché</a>
+        <a href="#pricing">💎 Pack Triple</a>
+        <a href="#" onclick="openIsoModal(event)" class="nav-audit-link">📑 Dossier CISO</a>
       </nav>
 
       <div class="nav-actions">
@@ -584,8 +763,9 @@
 
   <!-- Hero Section -->
   <section class="hero wrap">
-    <div class="hero-pill">
-      🔒 ARCHITECTURE ZERO-TRUST CONFORME ISO/IEC 27001:2022 & SOC 2 TYPE II
+    <div class="hero-pill-3d">
+      <span class="hero-pill-badge">ÉLITE MULTI-BRANCHES</span>
+      <span class="hero-pill-text">Architecture Zero-Trust • Cloud, Cashflow & Emails Blindés en 60s</span>
     </div>
 
     <h1 class="hero-title">
@@ -605,15 +785,15 @@
         🔍 Explorer les 3 Plateformes Intégrées
       </a>
       <button class="cta-secondary" onclick="openIsoModal(event)" style="border-color: rgba(16,185,129,0.4);">
-        🛡️ Dossier de Sécurité ISO 27001
+        🛡️ Accréditations & Dossier CISO
       </button>
     </div>
 
     <!-- Institutional Compliance Strip -->
     <div class="trust-strip">
-      <div class="trust-item">
+      <div class="trust-item" onclick="openIsoModal(event)" style="cursor:pointer;" title="Consulter le dossier d'accréditation">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        <span>ISO/IEC 27001:2022 Aligned</span>
+        <span>Accréditation CISO Tier-4</span>
       </div>
       <div class="trust-item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -645,23 +825,27 @@
     </div>
 
     <div class="branch-suite-container">
-      <!-- Master Branch Selector Tab Bar -->
+      <!-- Master Branch Selector Tab Bar - Real Tactile 3D Switches -->
       <div class="branch-tabs-nav">
         <button class="branch-tab-btn active-tab tab-winnow" id="btnTabWinnow" onclick="selectBranchTab('winnow')">
-          <span>⚡ Winnow FinOps</span>
-          <span class="tab-pill-badge" style="background:rgba(168,85,247,0.25); color:#C084FC;">Cloud & Datadog</span>
+          <span style="font-size: 16px;">⚡</span>
+          <span>Winnow FinOps</span>
+          <span class="tab-pill-badge" style="background:rgba(168,85,247,0.25); color:#E9D5FF; border:1px solid rgba(168,85,247,0.4);">Cloud & Datadog</span>
         </button>
         <button class="branch-tab-btn" id="btnTabRescue" onclick="selectBranchTab('rescue')">
-          <span>💳 Revenue Rescue</span>
-          <span class="tab-pill-badge" style="background:rgba(16,185,129,0.25); color:#34D399;">Stripe Dunning</span>
+          <span style="font-size: 16px;">💳</span>
+          <span>Revenue Rescue</span>
+          <span class="tab-pill-badge" style="background:rgba(16,185,129,0.25); color:#A7F3D0; border:1px solid rgba(16,185,129,0.4);">Stripe Dunning</span>
         </button>
         <button class="branch-tab-btn" id="btnTabInbox" onclick="selectBranchTab('inbox')">
-          <span>🛡️ InboxGuard</span>
-          <span class="tab-pill-badge" style="background:rgba(6,182,212,0.25); color:#38BDF8;">Email DNS</span>
+          <span style="font-size: 16px;">🛡️</span>
+          <span>InboxGuard</span>
+          <span class="tab-pill-badge" style="background:rgba(6,182,212,0.25); color:#BAE6FD; border:1px solid rgba(6,182,212,0.4);">Email DNS</span>
         </button>
         <button class="branch-tab-btn" id="btnTabOverview" onclick="selectBranchTab('overview')">
-          <span>🌐 Vue Synthétique</span>
-          <span class="tab-pill-badge" style="background:rgba(245,158,11,0.2); color:#FBBF24;">Les 3 Piliers</span>
+          <span style="font-size: 16px;">🌐</span>
+          <span>Vue Synthétique</span>
+          <span class="tab-pill-badge" style="background:rgba(245,158,11,0.2); color:#FDE68A; border:1px solid rgba(245,158,11,0.4);">Les 3 Piliers</span>
         </button>
       </div>
 
