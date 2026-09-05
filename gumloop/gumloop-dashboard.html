@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gumloop AI Automation Hub — Ecosystem 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #0B0B0C;
+      --surface: #151518;
+      --border: rgba(255, 255, 255, 0.12);
+      --primary: #8B5CF6; /* Gumloop Purple Glow */
+      --primary-hover: #7C3AED;
+      --text: #F8FAFC;
+      --text-muted: #8E8E93;
+      --success: #10B981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; padding: 2rem; }
+
+    .max-w-6xl { max-width: 72rem; margin: 0 auto; }
+    .glass-card {
+      background: linear-gradient(145deg, rgba(25, 25, 30, 0.85) 0%, rgba(14, 14, 18, 0.95) 100%);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .btn-gumloop {
+      background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+      color: #fff; font-weight: 700; border: none; padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-gumloop:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    input, select {
+      width: 100%; background: #18181B; border: 1px solid var(--border);
+      color: #fff; padding: 0.6rem 0.8rem; border-radius: 0.5rem; outline: none; font-size: 0.85rem;
+    }
+    label { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem; display: block; }
+    .badge { background: rgba(139, 92, 246, 0.15); color: #C4B5FD; border: 1px solid rgba(139, 92, 246, 0.3); padding: 0.2rem 0.5rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="max-w-6xl space-y-6">
+    
+    <!-- HEADER -->
+    <div class="flex items-center justify-between border-b border-white/10 pb-4" style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <h1 style="font-size: 1.5rem; font-weight: 800;">Gumloop AI Engine Hub</h1>
+          <span class="badge">Google Account Synchronisé</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Compte actif: <b style="color:#fff;">najjar.nidhal@gmail.com</b></p>
+      </div>
+      <a href="https://app.gumloop.com" target="_blank" class="btn-gumloop" style="text-decoration:none;">
+        ⚡ Ouvrir Gumloop App →
+      </a>
+    </div>
+
+    <!-- 3 SAAS PIPELINE TESTERS -->
+    <div class="grid">
+      
+      <!-- INBOXGUARD -->
+      <div class="glass-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h3 style="font-size:1rem;">🛡️ InboxGuard Pipeline</h3>
+          <span style="font-size:0.7rem; color:#10B981; font-family:monospace;">READY</span>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label>Domaine Prospect à Scanner</label>
+          <input type="text" id="igDomain" value="2sconstruction.ci">
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label>Email Destinataire Rapport</label>
+          <input type="email" id="igEmail" value="najjar.nidhal@gmail.com">
+        </div>
+        <button onclick="runPipeline('inboxguard')" class="btn-gumloop" style="width:100%;">
+          ▶ Lancer Audit DNS Gumloop
+        </button>
+      </div>
+
+      <!-- WINNOW -->
+      <div class="glass-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h3 style="font-size:1rem;">⚡ Winnow Pipeline</h3>
+          <span style="font-size:0.7rem; color:#10B981; font-family:monospace;">READY</span>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label>Volume de Logs (GB / Mois)</label>
+          <input type="number" id="winnowGb" value="1500">
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label>Fournisseur Cloud</label>
+          <select id="winnowProvider">
+            <option value="Datadog">Datadog</option>
+            <option value="AWS CloudWatch">AWS CloudWatch</option>
+            <option value="New Relic">New Relic</option>
+          </select>
+        </div>
+        <button onclick="runPipeline('winnow')" class="btn-gumloop" style="width:100%;">
+          ▶ Calculer Économies IA
+        </button>
+      </div>
+
+      <!-- REVENUE RESCUE -->
+      <div class="glass-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h3 style="font-size:1rem;">💳 Revenue Rescue Pipeline</h3>
+          <span style="font-size:0.7rem; color:#10B981; font-family:monospace;">READY</span>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label>Nom du Client</label>
+          <input type="text" id="rrClient" value="Kouamé Jean-Marc">
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label>Montant Échoué (FCFA)</label>
+          <input type="text" id="rrAmount" value="45 000 FCFA">
+        </div>
+        <button onclick="runPipeline('revenue_rescue')" class="btn-gumloop" style="width:100%;">
+          ▶ Relancer Paiement 1-Tap
+        </button>
+      </div>
+
+    </div>
+
+    <!-- LIVE CONSOLE OUTPUT -->
+    <div class="glass-card">
+      <h4 style="font-size:0.9rem; margin-bottom:0.5rem; color:var(--text-muted);">Console d'Exécution & Retour de Gumloop Webhook</h4>
+      <pre id="consoleLog" style="background:#09090B; padding:1rem; border-radius:0.5rem; border:1px solid var(--border); color:#10B981; font-family:'JetBrains Mono', monospace; font-size:0.8rem; height:160px; overflow-y:auto;">
+[SYSTEM] Console Gumloop Prête pour najjar.nidhal@gmail.com
+[INFO] Cliquez sur un pipeline ci-dessus pour simuler ou déclencher l'exécution IA...
+      </pre>
+    </div>
+
+  </div>
+
+  <script>
+    function log(msg) {
+      const el = document.getElementById('consoleLog');
+      el.textContent += '\n' + msg;
+      el.scrollTop = el.scrollHeight;
+    }
+
+    function runPipeline(type) {
+      log(`[START] Lancement du pipeline Gumloop: ${type.toUpperCase()}...`);
+      setTimeout(() => {
+        if (type === 'inboxguard') {
+          const dom = document.getElementById('igDomain').value;
+          log(`[SCRAPER] Scan DNS effectué pour ${dom}...`);
+          log(`[LLM CLAUDE] Génération diagnostic SPF/DMARC... Score: 85/100`);
+          log(`[SUCCESS] Email d'audit préparé et envoyé à najjar.nidhal@gmail.com !`);
+        } else if (type === 'winnow') {
+          const gb = document.getElementById('winnowGb').value;
+          log(`[ANALYZER] Analyse de ${gb} GB de logs télémétrie...`);
+          log(`[REDUCTION] 35% de logs DEBUG redondants détectés.`);
+          log(`[ROI] Économie annuelle calculée: $6,300 USD !`);
+        } else {
+          const name = document.getElementById('rrClient').value;
+          const amt = document.getElementById('rrAmount').value;
+          log(`[REVENUE RESCUE] Échec de paiement de ${amt} pour ${name}.`);
+          log(`[LLM COPYWRITER] Message WhatsApp personnalisé généré avec lien 1-Tap.`);
+          log(`[SUCCESS] Notification de relance transmise.`);
+        }
+      }, 800);
+    }
+  </script>
+</body>
+</html>

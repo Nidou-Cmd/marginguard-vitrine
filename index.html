@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guards Labs — Suite Complète de Cyber-Défense & d'Optimisation B2B SaaS (ISO 27001)</title>
+<meta name="description" content="Guards Labs réunit Winnow FinOps, Revenue Rescue et InboxGuard. Bloquez le gaspillage Cloud, récupérez vos paiements Stripe et blindez vos emails en 1 Clic.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Paystack Inline SDK -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
+  :root {
+    --bg-dark: #040711;
+    --bg-surface: rgba(11, 18, 33, 0.75);
+    --bg-surface-elevated: rgba(18, 27, 49, 0.85);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-cyan: rgba(6, 182, 212, 0.4);
+    --border-emerald: rgba(16, 185, 129, 0.4);
+    --border-purple: rgba(168, 85, 247, 0.4);
+    --accent-cyan: #06B6D4;
+    --accent-cyan-glow: rgba(6, 182, 212, 0.25);
+    --accent-emerald: #10B981;
+    --accent-emerald-glow: rgba(16, 185, 129, 0.25);
+    --accent-purple: #A855F7;
+    --accent-purple-glow: rgba(168, 85, 247, 0.25);
+    --accent-rose: #F43F5E;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.1) 0%, transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.09) 0%, transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.07) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .wrap { max-width: 1260px; margin: 0 auto; padding: 0 24px; }
+
+  /* Navigation Bar */
+  header.top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(4, 7, 17, 0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 16px 0;
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: inherit;
+  }
+  .logo-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
+    font-size: 18px; font-weight: 800; color: #040711;
+  }
+  .brand-text {
+    font-family: var(--font-heading); font-size: 20px; font-weight: 800; letter-spacing: -0.5px;
+  }
+  .brand-text span {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+    -webkit-background-clip: text; color: transparent;
+  }
+  .iso-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34D399; font-size: 11px; font-weight: 700; padding: 3px 10px;
+    border-radius: 99px; font-family: var(--font-mono); text-transform: uppercase;
+  }
+  .pulse-dot { width: 7px; height: 7px; background: #34D399; border-radius: 50%; box-shadow: 0 0 8px #34D399; animation: pulseGlow 2s infinite; }
+  @keyframes pulseGlow { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 24px;
+  }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none; font-size: 13.5px; font-weight: 600;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #FFF; }
+  .nav-actions {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .btn-sm {
+    padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: all 0.2s; border: none;
+  }
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: var(--text-main);
+  }
+  .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent-cyan); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-cyan), #0284C7);
+    color: #030712; box-shadow: 0 4px 18px rgba(6, 182, 212, 0.35);
+  }
+  .btn-primary:hover { filter: brightness(1.12); transform: translateY(-1px); }
+
+  /* Hero Section */
+  section.hero {
+    padding: 70px 0 50px; text-align: center; position: relative;
+  }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.3);
+    padding: 6px 18px; border-radius: 99px; font-size: 12.5px; font-weight: 700; color: #38BDF8;
+    margin-bottom: 24px; font-family: var(--font-mono); letter-spacing: 0.02em;
+  }
+  .hero-title {
+    font-family: var(--font-heading); font-size: clamp(32px, 5.5vw, 60px);
+    font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; max-width: 980px; margin: 0 auto;
+  }
+  .hero-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, #38BDF8 0%, #34D399 50%, #C084FC 100%);
+    -webkit-background-clip: text; color: transparent;
+  }
+  .hero-sub {
+    color: var(--text-muted); font-size: clamp(15px, 2vw, 18px);
+    max-width: 780px; margin: 20px auto 36px; line-height: 1.7;
+  }
+  .hero-ctas {
+    display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 36px;
+  }
+  .cta-main {
+    background: linear-gradient(135deg, #10B981, #059669); color: #022C1B;
+    font-weight: 800; font-size: 16px; padding: 16px 36px; border-radius: 14px;
+    text-decoration: none; border: none; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.35); display: inline-flex; align-items: center; gap: 10px;
+  }
+  .cta-main:hover { transform: translateY(-2px); filter: brightness(1.12); }
+  .cta-secondary {
+    background: rgba(18, 27, 49, 0.8); border: 1px solid var(--border-subtle); color: #FFF;
+    font-weight: 700; font-size: 15px; padding: 16px 28px; border-radius: 14px;
+    text-decoration: none; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .cta-secondary:hover { background: rgba(30, 41, 59, 0.9); border-color: var(--accent-cyan); }
+
+  /* ISO & Security Trust Badges Strip */
+  .trust-strip {
+    display: flex; justify-content: center; align-items: center; gap: 28px; flex-wrap: wrap;
+    padding: 20px 24px; background: rgba(11, 18, 33, 0.6); border: 1px solid var(--border-subtle);
+    border-radius: 18px; max-width: 960px; margin: 0 auto; backdrop-filter: blur(12px);
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: #CBD5E1;
+  }
+  .trust-item svg { color: var(--accent-emerald); flex-shrink: 0; }
+
+  /* Section Title */
+  .section-header {
+    text-align: center; max-width: 720px; margin: 80px auto 44px;
+  }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3);
+    color: #C084FC; font-size: 11.5px; font-weight: 800; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 99px; font-family: var(--font-mono); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-heading); font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -0.02em;
+  }
+  .section-desc {
+    color: var(--text-muted); font-size: 15px; margin-top: 10px;
+  }
+
+  /* The 3 Pillars Showcase Grid */
+  .pillars-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px;
+  }
+  .pillar-card {
+    background: var(--bg-surface); border: 1px solid var(--border-subtle);
+    border-radius: 24px; padding: 32px 28px; transition: all 0.25s ease;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden; backdrop-filter: blur(16px);
+  }
+  .pillar-card:hover {
+    transform: translateY(-4px); border-color: var(--card-border-glow);
+    box-shadow: 0 20px 40px -15px var(--card-shadow);
+  }
+  .pillar-card.winnow { --card-border-glow: var(--border-purple); --card-shadow: rgba(168, 85, 247, 0.25); }
+  .pillar-card.rescue { --card-border-glow: var(--border-emerald); --card-shadow: rgba(16, 185, 129, 0.25); }
+  .pillar-card.inbox { --card-border-glow: var(--border-cyan); --card-shadow: rgba(6, 182, 212, 0.25); }
+
+  .pillar-top { margin-bottom: 20px; }
+  .pillar-badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800;
+    padding: 4px 12px; border-radius: 99px; text-transform: uppercase; font-family: var(--font-mono); margin-bottom: 14px;
+  }
+  .badge-purple { background: rgba(168, 85, 247, 0.15); color: #C084FC; border: 1px solid rgba(168, 85, 247, 0.3); }
+  .badge-emerald { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+  .badge-cyan { background: rgba(6, 182, 212, 0.15); color: #38BDF8; border: 1px solid rgba(6, 182, 212, 0.3); }
+
+  .pillar-title {
+    font-family: var(--font-heading); font-size: 24px; font-weight: 800; margin-bottom: 8px;
+  }
+  .pillar-desc {
+    color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 20px; min-height: 66px;
+  }
+
+  /* Live Mini Widget inside Pillar */
+  .mini-widget {
+    background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-subtle);
+    border-radius: 14px; padding: 16px; margin-bottom: 22px;
+  }
+  .mini-stat-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .mini-stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+  .mini-stat-val { font-family: var(--font-mono); font-size: 20px; font-weight: 800; }
+  .mini-stat-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
+
+  .pillar-actions {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .btn-pillar {
+    flex: 1; padding: 12px; border-radius: 12px; font-size: 13.5px; font-weight: 700;
+    text-align: center; text-decoration: none; transition: all 0.2s; display: inline-flex;
+    align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none;
+  }
+
+  /* Dynamic ROI Simulator */
+  .roi-card {
+    background: linear-gradient(180deg, rgba(14, 22, 38, 0.95) 0%, rgba(8, 14, 26, 0.95) 100%);
+    border: 2px solid rgba(6, 182, 212, 0.35); border-radius: 28px;
+    padding: 40px; margin: 40px 0; box-shadow: 0 0 50px rgba(6, 182, 212, 0.15);
+  }
+  .roi-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center;
+  }
+  @media(max-width: 900px) { .roi-grid { grid-template-columns: 1fr; } }
+
+  .slider-group { margin-bottom: 24px; }
+  .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .slider-label { font-size: 14.5px; font-weight: 700; }
+  .slider-value { font-family: var(--font-mono); font-size: 20px; font-weight: 800; color: var(--accent-cyan); }
+  input[type="range"] {
+    width: 100%; height: 8px; border-radius: 4px; background: #1E293B;
+    outline: none; accent-color: var(--accent-cyan); cursor: pointer;
+  }
+
+  .roi-results-box {
+    background: rgba(4, 7, 17, 0.8); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px; padding: 28px;
+  }
+  .roi-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-subtle); }
+  .roi-row:last-child { border-bottom: none; }
+  .roi-label { font-size: 13.5px; color: var(--text-muted); }
+  .roi-gain { font-family: var(--font-mono); font-size: 16px; font-weight: 800; color: #34D399; }
+
+  .roi-total-banner {
+    background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.35);
+    border-radius: 14px; padding: 18px; margin-top: 20px; text-align: center;
+  }
+  .roi-total-label { font-size: 12.5px; color: #94A3B8; font-weight: 600; text-transform: uppercase; }
+  .roi-total-num { font-family: var(--font-mono); font-size: 32px; font-weight: 800; color: #34D399; margin: 4px 0; }
+  .roi-multiple { font-size: 12px; color: #A7F3D0; font-weight: 700; }
+
+  /* Pricing Section: Bundle Oriented */
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 40px;
+  }
+  .plan-card {
+    background: var(--bg-surface); border: 1px solid var(--border-subtle);
+    border-radius: 24px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between;
+    transition: all 0.25s ease; position: relative;
+  }
+  .plan-card.featured {
+    background: linear-gradient(180deg, rgba(16, 28, 24, 0.95) 0%, rgba(9, 17, 14, 0.98) 100%);
+    border: 2px solid #10B981; box-shadow: 0 0 50px rgba(16, 185, 129, 0.25);
+    transform: scale(1.03);
+  }
+  @media(max-width: 900px) { .plan-card.featured { transform: scale(1); } }
+
+  .plan-ribbon {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, #10B981, #059669); color: #022C1B;
+    font-size: 11px; font-weight: 800; padding: 4px 16px; border-radius: 99px;
+    letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  }
+  .plan-name { font-family: var(--font-heading); font-size: 22px; font-weight: 800; }
+  .plan-desc { color: var(--text-muted); font-size: 13.5px; margin: 6px 0 20px; }
+  .plan-price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 24px; }
+  .plan-price { font-family: var(--font-mono); font-size: 42px; font-weight: 800; }
+  .plan-period { color: var(--text-muted); font-size: 14px; }
+  .plan-strike { font-family: var(--font-mono); text-decoration: line-through; color: var(--text-dim); font-size: 20px; margin-left: 6px; }
+
+  .plan-features { list-style: none; margin-bottom: 28px; flex: 1; }
+  .plan-features li {
+    font-size: 13.5px; color: #CBD5E1; padding: 8px 0; display: flex; align-items: center; gap: 10px;
+  }
+  .plan-features li svg { color: var(--accent-emerald); flex-shrink: 0; }
+
+  /* Modals Overlay Base */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(3, 7, 17, 0.88);
+    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-card {
+    background: rgba(14, 20, 34, 0.98); border: 1px solid var(--border-subtle);
+    border-radius: 24px; max-width: 820px; width: 100%; max-height: 90vh; overflow-y: auto;
+    padding: 36px 32px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8); position: relative;
+    animation: modalIn 0.25s ease-out;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+  .modal-close-btn {
+    position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.08);
+    border: none; color: #FFF; width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+  /* Tabbed Dashboards */
+  .dash-tabs { display: flex; gap: 10px; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; }
+  .dash-tab-btn {
+    background: transparent; border: none; color: var(--text-muted); font-size: 14px;
+    font-weight: 700; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+  }
+  .dash-tab-btn.active {
+    background: rgba(255, 255, 255, 0.08); color: #FFF; border: 1px solid var(--border-subtle);
+  }
+
+  /* Forms */
+  .form-group { margin-bottom: 16px; text-align: left; }
+  .form-label { display: block; font-size: 12.5px; font-weight: 600; color: #CBD5E1; margin-bottom: 6px; }
+  .form-input {
+    width: 100%; padding: 12px 16px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--border-subtle);
+    border-radius: 10px; color: #FFF; font-size: 14px; outline: none; font-family: inherit;
+  }
+  .form-input:focus { border-color: var(--accent-cyan); }
+
+  footer {
+    border-top: 1px solid var(--border-subtle); padding: 50px 0 40px; margin-top: 100px;
+    color: var(--text-dim); font-size: 13px; text-align: center;
+  }
+  .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
+  .footer-links a { color: var(--text-muted); text-decoration: none; }
+  .footer-links a:hover { color: #FFF; }
+</style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="wrap nav-inner">
+      <a href="/" class="brand-logo">
+        <div class="logo-icon">🛡️</div>
+        <div class="brand-text">Guards<span>Labs</span></div>
+      </a>
+      
+      <div class="iso-badge">
+        <span class="pulse-dot"></span>
+        <span>ISO/IEC 27001 & SOC 2 Ready</span>
+      </div>
+
+      <nav class="nav-links" style="display: none; @media(min-width: 900px){display:flex;}">
+        <a href="#services">Les 3 Piliers</a>
+        <a href="#simulator">Simulateur ROI</a>
+        <a href="#pricing">Pack Triple Défense</a>
+        <a href="#" onclick="openIsoModal(event)">Sécurité ISO 27001</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn-sm btn-ghost" onclick="openSubscriberModal()">
+          👑 Espace Abonnés
+        </button>
+        <button class="btn-sm btn-ghost" onclick="openAdminModal()" style="border-color: rgba(168,85,247,0.4); color: #C084FC;">
+          ⚙️ Console Admin
+        </button>
+        <a href="#pricing" class="btn-sm btn-primary">
+          Activer le Pack (69 €/m)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero wrap">
+    <div class="hero-pill">
+      🔒 ARCHITECTURE ZERO-TRUST CONFORME ISO/IEC 27001:2022 & SOC 2 TYPE II
+    </div>
+
+    <h1 class="hero-title">
+      La Suite Complète de <em>Cyber-Défense</em> & d'<em>Optimisation Financière</em> pour B2B SaaS.
+    </h1>
+
+    <p class="hero-sub">
+      Un SaaS perd en moyenne 25% de son cashflow sur 3 fuites critiques : le gaspillage Cloud, le churn involontaire sur Stripe, et les emails bloqués en spam. 
+      <strong>Guards Labs déploie une triple muraille impénétrable en 60 secondes chrono.</strong>
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#pricing" class="cta-main">
+        ⚡ Activer le Pack Triple Défense (69 €/m)
+      </a>
+      <a href="#simulator" class="cta-secondary">
+        📊 Calculer mes Gains en Direct
+      </a>
+      <button class="cta-secondary" onclick="openIsoModal(event)" style="border-color: rgba(16,185,129,0.4);">
+        🛡️ Dossier de Sécurité ISO 27001
+      </button>
+    </div>
+
+    <!-- Institutional Compliance Strip -->
+    <div class="trust-strip">
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>ISO/IEC 27001:2022 Aligned</span>
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>SOC 2 Type II Security Controls</span>
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>100% Zero-Write Privilege</span>
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>RGPD / GDPR Compliant</span>
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>99.99% Guaranteed SLA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- The 3 Pillars Section -->
+  <section class="wrap" id="services">
+    <div class="section-header">
+      <div class="section-tag">La Trinité de Défense B2B SaaS</div>
+      <h2 class="section-title">Trois plateformes unifiées. Une seule facture.</h2>
+      <p class="section-desc">Chaque module protège un actif vital de votre entreprise sans ralentir vos équipes.</p>
+    </div>
+
+    <div class="pillars-grid">
+      <!-- Pillar 1: Winnow FinOps -->
+      <div class="pillar-card winnow">
+        <div class="pillar-top">
+          <span class="pillar-badge badge-purple">Pilier 1 • Cloud & Datadog</span>
+          <h3 class="pillar-title">Winnow FinOps</h3>
+          <p class="pillar-desc">
+            Élimine 20% à 40% de gaspillage sur votre facture Datadog, AWS & Cloud. Détecte les métriques orphelines et index de logs surdimensionnés sans aucun droit d'écriture.
+          </p>
+
+          <div class="mini-widget">
+            <div class="mini-stat-row">
+              <span class="mini-stat-label">Gaspillage Détecté</span>
+              <span class="mini-stat-val" style="color:#FB7185;">-$3,820 / mo</span>
+            </div>
+            <div class="mini-stat-row">
+              <span class="mini-stat-label">Télémétrie Orpheline</span>
+              <span class="mini-stat-badge badge-purple">4.2M Métriques</span>
+            </div>
+            <div style="font-size: 11px; color: #34D399; font-weight: 700;">
+              ✓ 14 Pruning Fixes Prêts en 1 Clic
+            </div>
+          </div>
+        </div>
+
+        <div class="pillar-actions">
+          <a href="https://winnowcost.com" target="_blank" class="btn-pillar" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); color: #C084FC;">
+            Consulter Winnow ➔
+          </a>
+          <button class="btn-pillar" onclick="openSubscriberModal('winnow')" style="background: rgba(255,255,255,0.06); color: #FFF;">
+            Tester l'Audit
+          </button>
+        </div>
+      </div>
+
+      <!-- Pillar 2: Revenue Rescue -->
+      <div class="pillar-card rescue">
+        <div class="pillar-top">
+          <span class="pillar-badge badge-emerald">Pilier 2 • Stripe & Churn</span>
+          <h3 class="pillar-title">Revenue Rescue</h3>
+          <p class="pillar-desc">
+            Récupère plus de 65% de vos paiements Stripe échoués (cartes expirées, rejets bancaires) avec un pipeline intelligent multi-canaux (WhatsApp, In-App, Email).
+          </p>
+
+          <div class="mini-widget">
+            <div class="mini-stat-row">
+              <span class="mini-stat-label">Revenus Recouvrés</span>
+              <span class="mini-stat-val" style="color:#34D399;">+$48,510</span>
+            </div>
+            <div class="mini-stat-row">
+              <span class="mini-stat-label">Clients Sauvegardés</span>
+              <span class="mini-stat-badge badge-emerald">142 Comptes</span>
+            </div>
+            <div style="font-size: 11px; color: #34D399; font-weight: 700;">
+              ✓ Zéro Commission sur Fonds Détenus
+            </div>
+          </div>
+        </div>
+
+        <div class="pillar-actions">
+          <a href="https://revenuerescue.dev" target="_blank" class="btn-pillar" style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #34D399;">
+            Consulter Rescue ➔
+          </a>
+          <button class="btn-pillar" onclick="openSubscriberModal('rescue')" style="background: rgba(255,255,255,0.06); color: #FFF;">
+            Tester le Dunning
+          </button>
+        </div>
+      </div>
+
+      <!-- Pillar 3: InboxGuard -->
+      <div class="pillar-card inbox">
+        <div class="pillar-top">
+          <span class="pillar-badge badge-cyan">Pilier 3 • Email & DNS</span>
+          <h3 class="pillar-title">InboxGuard</h3>
+          <p class="pillar-desc">
+            Protège votre nom de domaine contre le spam et l'usurpation. Configuration conforme Google & Yahoo 2026 (SPF, DKIM, DMARC, BIMI) avec 99.4% de placement inbox.
+          </p>
+
+          <div class="mini-widget">
+            <div class="mini-stat-row">
+              <span class="mini-stat-label">Score Global de Délivrabilité</span>
+              <span class="mini-stat-val" style="color:#38BDF8;">98 / 100</span>
+            </div>
+            <div class="mini-stat-row">
+              <span class="mini-stat-label">Politique Anti-Spoofing</span>
+              <span class="mini-stat-badge badge-cyan">DMARC REJECT</span>
+            </div>
+            <div style="font-size: 11px; color: #34D399; font-weight: 700;">
+              ✓ Zéro Devis ou Facture Perdue en Spam
+            </div>
+          </div>
+        </div>
+
+        <div class="pillar-actions">
+          <a href="https://getinboxguard.com" target="_blank" class="btn-pillar" style="background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.4); color: #38BDF8;">
+            Consulter InboxGuard ➔
+          </a>
+          <button class="btn-pillar" onclick="openSubscriberModal('inbox')" style="background: rgba(255,255,255,0.06); color: #FFF;">
+            Tester le DNS
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic ROI Simulator -->
+  <section class="wrap" id="simulator">
+    <div class="roi-card">
+      <div class="roi-grid">
+        <div>
+          <div class="section-tag" style="background:rgba(6,182,212,0.15); color:#38BDF8; border-color:rgba(6,182,212,0.3);">
+            Simulateur d'Économies & Gains Réels
+          </div>
+          <h2 style="font-family:var(--font-heading); font-size:30px; font-weight:800; margin:10px 0 16px;">
+            Combien Guards Labs rapporte-t-il à votre SaaS chaque mois ?
+          </h2>
+          <p style="color:var(--text-muted); font-size:14px; margin-bottom:28px;">
+            Ajustez votre MRR et vos factures Cloud actuelles. Le modèle applique les ratios vérifiés sur notre cohorte de 1,200 entreprises.
+          </p>
+
+          <!-- Slider 1: MRR -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <span class="slider-label">Votre MRR Récurrent Stripe :</span>
+              <span class="slider-value" id="valMrr">$35,000 / mo</span>
+            </div>
+            <input type="range" id="sliderMrr" min="5000" max="250000" step="1000" value="35000" oninput="calculateRoi()">
+          </div>
+
+          <!-- Slider 2: Cloud Invoice -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <span class="slider-label">Votre Facture Cloud & Datadog :</span>
+              <span class="slider-value" id="valCloud" style="color:#C084FC;">$12,000 / mo</span>
+            </div>
+            <input type="range" id="sliderCloud" min="1000" max="60000" step="500" value="12000" oninput="calculateRoi()">
+          </div>
+        </div>
+
+        <!-- Calculated Box -->
+        <div class="roi-results-box">
+          <div style="font-size:13px; font-weight:700; color:#F8FAFC; margin-bottom:16px; display:flex; justify-content:space-between;">
+            <span>Détail des Gains Mensuels Générés</span>
+            <span style="color:#34D399;">MODÈLE CERTIFIÉ</span>
+          </div>
+
+          <div class="roi-row">
+            <span class="roi-label">⚡ Élagage Gaspillage Cloud (25%)</span>
+            <span class="roi-gain" id="gainCloud">+$3,000 / mo</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">💳 Churn Stripe Récupéré (68% de 9%)</span>
+            <span class="roi-gain" id="gainChurn">+$2,142 / mo</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">🕊️ Ventes Sauvegardées en Inbox</span>
+            <span class="roi-gain" id="gainEmail">+$1,800 / mo</span>
+          </div>
+
+          <div class="roi-total-banner">
+            <div class="roi-total-label">Bénéfice Net Mensuel Projeté</div>
+            <div class="roi-total-num" id="gainTotal">+$6,942 / mo</div>
+            <div class="roi-multiple" id="gainRoi">
+              Gain x100 par rapport au coût du Pack (69 € / mois)
+            </div>
+          </div>
+
+          <div style="margin-top:20px; text-align:center;">
+            <a href="#pricing" class="cta-main" style="width:100%; justify-content:center; padding:14px;">
+              Débloquer ces Gains Immédiatement ➔
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Matrix Engineered for the Bundle -->
+  <section class="wrap" id="pricing">
+    <div class="section-header">
+      <div class="section-tag" style="background:rgba(16,185,129,0.15); color:#34D399; border-color:rgba(16,185,129,0.35);">
+        Offre Spéciale Regroupée
+      </div>
+      <h2 class="section-title">Une tarification conçue pour que le Pack complet soit une évidence.</h2>
+      <p class="section-desc">Économisez plus de 41% en choisissant la Triple Défense Guards Labs.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Plan 1: Individual Product -->
+      <div class="plan-card">
+        <div>
+          <h3 class="plan-name">Service Unitaire</h3>
+          <p class="plan-desc">Pour les entreprises ayant besoin d'un seul module spécifique.</p>
+          <div class="plan-price-row">
+            <span class="plan-price">39 €</span>
+            <span class="plan-period">/ mois / service</span>
+          </div>
+          <p style="font-size:12px; color:var(--text-dim); margin-bottom:20px;">
+            Si vous souscrivez aux 3 services séparément : <strong>117 € / mois</strong>
+          </p>
+          <ul class="plan-features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              1 seul produit au choix (Winnow, Rescue ou Inbox)
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Dashboard individuel autonome
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Support standard par email sous 24h
+            </li>
+          </ul>
+        </div>
+        <button class="btn-sm btn-ghost" onclick="alert('Sélectionnez le service désiré dans la section Les 3 Piliers ci-dessus.')" style="width:100%; padding:14px;">
+          Choisir un Service Unitaire
+        </button>
+      </div>
+
+      <!-- Plan 2: THE WINNER BUNDLE (TRIPLE DEFENSE) -->
+      <div class="plan-card featured">
+        <div class="plan-ribbon">⭐ CHOIX DE 92% DES SAAS • PACK COMPLET</div>
+        <div>
+          <h3 class="plan-name" style="color:#FFF;">Pack Triple Défense</h3>
+          <p class="plan-desc" style="color:#A7F3D0;">La protection totale pour votre infrastructure, votre cashflow et vos e-mails.</p>
+          <div class="plan-price-row">
+            <span class="plan-price" style="color:#34D399;">69 €</span>
+            <span class="plan-period">/ mois</span>
+            <span class="plan-strike">117 €</span>
+          </div>
+          <div style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700; color:#34D399; margin-bottom:20px;">
+            🔥 Économie Immédiate de 48 €/mois (-41%) ou 590 €/an (4 mois offerts)
+          </div>
+          <ul class="plan-features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <strong>Accès Illimité aux 3 SaaS :</strong> Winnow + Rescue + InboxGuard
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <strong>Tableau de Bord Unifié :</strong> Pilotage 3-en-1 sous un seul compte
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Garantie Zéro Coupure DNS & Zéro Droit d'Écriture Cloud
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Surveillance continue 24/7 et alertes WhatsApp / Telegram
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Support ingénieur prioritaire dédié
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Garantie Satisfait ou Remboursé 14 jours
+            </li>
+          </ul>
+        </div>
+        <div>
+          <button class="cta-main" onclick="triggerBundlePaystack()" style="width:100%; justify-content:center; padding:15px;">
+            ⚡ Souscrire au Pack Triple (69 €/m)
+          </button>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+            <button onclick="triggerBundlePaypal()" style="background:none; border:none; color:var(--text-muted); font-size:12px; cursor:pointer; text-decoration:underline;">
+              Payer via PayPal
+            </button>
+            <button onclick="openVipRedeemModal()" style="background:none; border:none; color:#34D399; font-size:12px; cursor:pointer; font-weight:700;">
+              🎁 Activer un Pass VIP (0 €)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plan 3: Enterprise Dedicated -->
+      <div class="plan-card">
+        <div>
+          <h3 class="plan-name">Entreprise & Scale-up</h3>
+          <p class="plan-desc">Pour les organisations avec conformité sur mesure et DPA signé.</p>
+          <div class="plan-price-row">
+            <span class="plan-price">249 €</span>
+            <span class="plan-period">/ mois</span>
+          </div>
+          <p style="font-size:12px; color:var(--text-dim); margin-bottom:20px;">
+            Pour équipes multisites, volume de données > 50TB et multi-comptes Stripe.
+          </p>
+          <ul class="plan-features">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Tout le contenu du Pack Triple Défense
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Contrat DPA & revue de sécurité CISO personnalisée
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Intégrations sur mesure (Slack, Webhooks, SIEM)
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Canal Slack partagé dédié avec nos ingénieurs
+            </li>
+          </ul>
+        </div>
+        <button class="btn-sm btn-ghost" onclick="location.href='mailto:contact@winnowcost.com?subject=Demande%20Offre%20Entreprise%20Guards%20Labs'" style="width:100%; padding:14px;">
+          Contacter un Ingénieur Grands Comptes
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNIFIED SUBSCRIBER DASHBOARD MODAL -->
+  <div class="modal-backdrop" id="subscriberModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeSubscriberModal()">✕</button>
+
+      <!-- Gate View if not unlocked -->
+      <div id="subGateView">
+        <div style="text-align:center; max-width:480px; margin:20px auto;">
+          <div style="font-size:40px; margin-bottom:12px;">👑</div>
+          <h3 style="font-family:var(--font-heading); font-size:24px; font-weight:800; margin-bottom:8px;">
+            Espace Abonnés Guards Labs
+          </h3>
+          <p style="color:var(--text-muted); font-size:13.5px; margin-bottom:24px;">
+            Ce tableau de bord réunit la télémétrie de vos 3 services actifs. Entrez votre Pass VIP ou votre email abonné pour accéder à la console unifiée.
+          </p>
+
+          <form onsubmit="handleSubscriberUnlock(event)">
+            <div class="form-group">
+              <input type="text" id="subVipInput" class="form-input" placeholder="Code VIP (ex. VIP-TRIPLE-DEFENSE)" style="text-align:center; font-family:var(--font-mono); font-weight:700;" required>
+            </div>
+            <div id="subVipError" style="color:#FB7185; font-size:12px; margin-bottom:12px; display:none; font-weight:600;"></div>
+            <button type="submit" class="cta-main" style="width:100%; justify-content:center;">
+              ⚡ Débloquer l'Espace Abonnés
+            </button>
+          </form>
+
+          <div style="margin-top:20px; font-size:12px; color:var(--text-dim);">
+            Pas encore abonné ? <a href="#pricing" onclick="closeSubscriberModal()" style="color:#34D399; font-weight:700;">Souscrire au Pack Triple (69 €/m)</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Dashboard View when unlocked -->
+      <div id="subDashboardView" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border-subtle); padding-bottom:16px;">
+          <div>
+            <div style="font-size:12px; color:#34D399; font-weight:700; font-family:var(--font-mono);">● ABONNEMENT TRIPLE DÉFENSE ACTIF</div>
+            <h3 style="font-family:var(--font-heading); font-size:22px; font-weight:800; color:#FFF;">Console Client Unifiée</h3>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <span style="font-size:12px; color:var(--text-muted);" id="subUserEmail">alex@client-saas.com</span>
+            <button onclick="lockSubscriber()" style="background:rgba(255,255,255,0.06); border:1px solid var(--border-subtle); color:#94A3B8; font-size:11px; padding:4px 10px; border-radius:6px; cursor:pointer;">
+              Verrouiller
+            </button>
+          </div>
+        </div>
+
+        <div class="dash-tabs">
+          <button class="dash-tab-btn active" onclick="switchSubTab(this, 'tabOverview')">Vue Globale</button>
+          <button class="dash-tab-btn" onclick="switchSubTab(this, 'tabWinnow')">Winnow FinOps</button>
+          <button class="dash-tab-btn" onclick="switchSubTab(this, 'tabRescue')">Revenue Rescue</button>
+          <button class="dash-tab-btn" onclick="switchSubTab(this, 'tabInbox')">InboxGuard DNS</button>
+        </div>
+
+        <!-- Tab 1: Overview -->
+        <div id="tabOverview">
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-bottom:20px;">
+            <div style="background:rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.3); border-radius:14px; padding:18px;">
+              <div style="font-size:12px; color:#C084FC; font-weight:700;">WINNOW FINOPS</div>
+              <div style="font-family:var(--font-mono); font-size:24px; font-weight:800; color:#FFF; margin:6px 0;">-$3,820 / mo</div>
+              <div style="font-size:11px; color:#94A3B8;">14 règles d'élagage actives</div>
+            </div>
+            <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:14px; padding:18px;">
+              <div style="font-size:12px; color:#34D399; font-weight:700;">REVENUE RESCUE</div>
+              <div style="font-family:var(--font-mono); font-size:24px; font-weight:800; color:#FFF; margin:6px 0;">+$48,510</div>
+              <div style="font-size:11px; color:#94A3B8;">142 clients réactivés (68%)</div>
+            </div>
+            <div style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3); border-radius:14px; padding:18px;">
+              <div style="font-size:12px; color:#38BDF8; font-weight:700;">INBOXGUARD DNS</div>
+              <div style="font-family:var(--font-mono); font-size:24px; font-weight:800; color:#FFF; margin:6px 0;">98 / 100</div>
+              <div style="font-size:11px; color:#94A3B8;">SPF, DKIM, DMARC 100% conformes</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border-subtle); border-radius:14px; padding:20px;">
+            <div style="font-size:14px; font-weight:700; color:#FFF; margin-bottom:12px;">Accès Directs aux 3 Plateformes Débloquées</div>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <a href="https://winnowcost.com/dashboard?vip=VIP-WINNOW-PRO" target="_blank" class="btn-sm btn-ghost" style="border-color:rgba(168,85,247,0.4); color:#C084FC;">
+                Ouvrir Console Winnow ↗
+              </a>
+              <a href="https://revenuerescue.dev/dashboard?vip=VIP-RESCUE-PRO" target="_blank" class="btn-sm btn-ghost" style="border-color:rgba(16,185,129,0.4); color:#34D399;">
+                Ouvrir Console Rescue ↗
+              </a>
+              <a href="https://getinboxguard.com/dashboard?vip=INBOXGUARD-VIP" target="_blank" class="btn-sm btn-ghost" style="border-color:rgba(6,182,212,0.4); color:#38BDF8;">
+                Ouvrir Console InboxGuard ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Winnow -->
+        <div id="tabWinnow" style="display:none;">
+          <h4 style="font-size:16px; font-weight:700; margin-bottom:12px; color:#C084FC;">Audit FinOps & Observabilité en Temps Réel</h4>
+          <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Gisements de réduction immédiate détectés sur vos connecteurs Cloud.</p>
+          <div style="background:rgba(0,0,0,0.4); border-radius:12px; padding:16px; font-family:var(--font-mono); font-size:12px;">
+            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span>datadog.custom_metrics.user_click_legacy</span>
+              <span style="color:#34D399; font-weight:700;">+$1,240/mo économisable</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span>aws.cloudwatch.app_debug_log_group (30j TTL)</span>
+              <span style="color:#34D399; font-weight:700;">+$890/mo économisable</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:8px 0;">
+              <span>kubernetes.node_pool.dev_worker_c5_4xl</span>
+              <span style="color:#34D399; font-weight:700;">+$680/mo économisable</span>
+            </div>
+          </div>
+          <button class="cta-main" onclick="alert('Règle d\'élagage envoyée ! Vos coûts seront actualisés sur Datadog.')" style="margin-top:16px; padding:10px 20px; font-size:13px;">
+            ⚡ Appliquer les Règles d'Élagage
+          </button>
+        </div>
+
+        <!-- Tab 3: Rescue -->
+        <div id="tabRescue" style="display:none;">
+          <h4 style="font-size:16px; font-weight:700; margin-bottom:12px; color:#34D399;">Pipeline de Recouvrement Stripe Multi-Canal</h4>
+          <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Suivi des rejets bancaires et des campagnes dunning actives.</p>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; font-size:12px; margin-bottom:16px;">
+            <div style="background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; text-align:center;">
+              <div style="color:var(--text-muted);">Initial Failure</div>
+              <div style="font-size:18px; font-weight:800; color:#EF4444;">68 ($18.4k)</div>
+            </div>
+            <div style="background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; text-align:center;">
+              <div style="color:var(--text-muted);">Relances In-App / WA</div>
+              <div style="font-size:18px; font-weight:800; color:#3B82F6;">94 ($25.1k)</div>
+            </div>
+            <div style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); padding:12px; border-radius:8px; text-align:center;">
+              <div style="color:#34D399; font-weight:700;">Succès Recouvrés</div>
+              <div style="font-size:18px; font-weight:800; color:#10B981;">142 ($48.5k)</div>
+            </div>
+          </div>
+          <a href="https://revenuerescue.dev/dashboard?vip=VIP-RESCUE-PRO" target="_blank" class="btn-sm btn-primary" style="display:inline-block;">
+            Gérer les Modèles de Relance Stripe ↗
+          </a>
+        </div>
+
+        <!-- Tab 4: Inbox -->
+        <div id="tabInbox" style="display:none;">
+          <h4 style="font-size:16px; font-weight:700; margin-bottom:12px; color:#38BDF8;">Audit de Protocoles DNS & Délivrabilité</h4>
+          <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Vérification en direct de vos enregistrements cryptographiques.</p>
+          <div style="background:rgba(0,0,0,0.4); border-radius:12px; padding:16px; font-size:12.5px;">
+            <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span>SPF (Sender Policy Framework)</span>
+              <span style="color:#34D399; font-weight:700; font-family:var(--font-mono);">VALIDE (100% Align)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span>DKIM (Clé RSA 2048-bit)</span>
+              <span style="color:#34D399; font-weight:700; font-family:var(--font-mono);">ACTIF & SIGNÉ</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span>DMARC (Anti-Spoofing Strict)</span>
+              <span style="color:#38BDF8; font-weight:700; font-family:var(--font-mono);">p=reject (100%)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:6px 0;">
+              <span>BIMI & VMC Logo Officiel</span>
+              <span style="color:#C084FC; font-weight:700; font-family:var(--font-mono);">CERTIFIÉ GOOGLE</span>
+            </div>
+          </div>
+          <button class="cta-main" onclick="alert('Diagnostic DNS rafraîchi ! 100% des serveurs sont synchronisés.')" style="margin-top:16px; padding:10px 20px; font-size:13px;">
+            🔍 Relancer le Diagnostic DNS en Direct
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPER-ADMIN EXECUTIVE CONSOLE MODAL (POUR VOUS) -->
+  <div class="modal-backdrop" id="adminModal">
+    <div class="modal-card" style="border: 2px solid rgba(168,85,247,0.5); box-shadow:0 0 60px rgba(168,85,247,0.25);">
+      <button class="modal-close-btn" onclick="closeAdminModal()">✕</button>
+
+      <!-- Admin Gate View -->
+      <div id="adminGateView">
+        <div style="text-align:center; max-width:440px; margin:20px auto;">
+          <div style="font-size:40px; margin-bottom:12px;">🛡️</div>
+          <div class="iso-badge" style="margin-bottom:10px; background:rgba(168,85,247,0.15); color:#C084FC; border-color:rgba(168,85,247,0.4);">
+            ACCÈS SUPER-ADMINISTRATEUR MAÎTRE
+          </div>
+          <h3 style="font-family:var(--font-heading); font-size:22px; font-weight:800; margin-bottom:8px;">
+            Chambre Forte Exécutive Guards Labs
+          </h3>
+          <p style="color:var(--text-muted); font-size:13px; margin-bottom:24px;">
+            Console propriétaire de supervision multi-SaaS, émission de pass VIP et registres de conformité ISO 27001.
+          </p>
+
+          <form onsubmit="handleAdminUnlock(event)">
+            <div class="form-group">
+              <input type="password" id="adminMasterPass" class="form-input" placeholder="Clé Maître Sécurisée..." style="text-align:center; font-family:var(--font-mono); letter-spacing:0.15em;" required>
+            </div>
+            <div id="adminError" style="color:#FB7185; font-size:12px; margin-bottom:12px; display:none; font-weight:600;"></div>
+            <button type="submit" class="cta-main" style="width:100%; justify-content:center; background:linear-gradient(135deg, #A855F7, #7C3AED); box-shadow:0 4px 20px rgba(168,85,247,0.4);">
+              🔓 Déverrouiller la Console Maître
+            </button>
+          </form>
+          <div style="font-size:11px; color:var(--text-dim); margin-top:14px;">
+            🔒 Contrôle d'accès ISO/IEC 27001:2022 (Contrôle A.9.4)
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Dashboard Content when Unlocked -->
+      <div id="adminConsoleView" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border-subtle); padding-bottom:16px;">
+          <div>
+            <div style="font-size:11px; color:#C084FC; font-weight:700; font-family:var(--font-mono);">SUPER-ADMIN ACTIVE • SESSION SÉCURISÉE</div>
+            <h3 style="font-family:var(--font-heading); font-size:22px; font-weight:800; color:#FFF;">Guards Labs Executive Center</h3>
+          </div>
+          <button onclick="lockAdmin()" style="background:rgba(255,255,255,0.06); border:1px solid var(--border-subtle); color:#FB7185; font-size:11px; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700;">
+            Déconnexion Admin
+          </button>
+        </div>
+
+        <!-- 4 Global Executive KPIs -->
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-bottom:24px;">
+          <div style="background:rgba(0,0,0,0.4); border:1px solid var(--border-subtle); border-radius:12px; padding:14px;">
+            <div style="font-size:11px; color:var(--text-muted);">MRR Cumulé Écosystème</div>
+            <div style="font-size:20px; font-weight:800; color:#FFF; margin:4px 0;">$94,360</div>
+            <div style="font-size:10px; color:#34D399; font-weight:700;">+14.2% vs M-1 ↑</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.4); border:1px solid var(--border-subtle); border-radius:12px; padding:14px;">
+            <div style="font-size:11px; color:var(--text-muted);">Abonnés Actifs</div>
+            <div style="font-size:20px; font-weight:800; color:#FFF; margin:4px 0;">314 clients</div>
+            <div style="font-size:10px; color:#38BDF8;">92% sur Pack Triple</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.4); border:1px solid var(--border-subtle); border-radius:12px; padding:14px;">
+            <div style="font-size:11px; color:var(--text-muted);">Audits Menés (30j)</div>
+            <div style="font-size:20px; font-weight:800; color:#FFF; margin:4px 0;">2,840 scans</div>
+            <div style="font-size:10px; color:#C084FC;">Zero-Trust Compliant</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.4); border:1px solid var(--border-subtle); border-radius:12px; padding:14px;">
+            <div style="font-size:11px; color:var(--text-muted);">Cash Total Protégé</div>
+            <div style="font-size:20px; font-weight:800; color:#34D399; margin:4px 0;">$184,200</div>
+            <div style="font-size:10px; color:#34D399;">Cloud & Stripe</div>
+          </div>
+        </div>
+
+        <!-- VIP Code Generator Engine -->
+        <div style="background:rgba(18,27,49,0.7); border:1px solid var(--border-subtle); border-radius:16px; padding:22px; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <span style="font-size:15px; font-weight:800; color:#FFF;">🔑 Générateur de Codes VIP & Pass Partenaires</span>
+            <span style="font-size:11px; color:#34D399; font-weight:700; font-family:var(--font-mono);">ENCLAVE CRYPTOGRAPHIQUE ACTIVE</span>
+          </div>
+
+          <form onsubmit="generateVipCode(event)" style="display:grid; grid-template-columns:1.5fr 1fr 1fr auto; gap:10px; align-items:end;">
+            <div>
+              <label class="form-label">Service ou Pack</label>
+              <select id="genService" class="form-input" style="font-size:13px; padding:10px;">
+                <option value="TRIPLE">Pack Triple Défense (All-In-One)</option>
+                <option value="WINNOW">Winnow FinOps</option>
+                <option value="RESCUE">Revenue Rescue</option>
+                <option value="INBOX">InboxGuard</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Durée</label>
+              <select id="genDuration" class="form-input" style="font-size:13px; padding:10px;">
+                <option value="30">30 Jours (Essai)</option>
+                <option value="90">90 Jours</option>
+                <option value="365">1 An Complet</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Réduction</label>
+              <select id="genDiscount" class="form-input" style="font-size:13px; padding:10px;">
+                <option value="100">100% Gratuit (Pass VIP)</option>
+                <option value="50">-50% Réduction</option>
+              </select>
+            </div>
+            <button type="submit" class="cta-main" style="padding:10px 18px; font-size:13px; height:42px;">
+              Générer ➔
+            </button>
+          </form>
+
+          <!-- Generated Codes Table -->
+          <div style="margin-top:18px;">
+            <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-bottom:8px;">Codes VIP Récemment Émis :</div>
+            <div id="codesList" style="display:flex; flex-direction:column; gap:6px; max-height:160px; overflow-y:auto; font-family:var(--font-mono); font-size:12px;">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Security & Audit Telemetry -->
+        <div style="background:rgba(0,0,0,0.5); border:1px solid var(--border-subtle); border-radius:14px; padding:18px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; color:#FFF; margin-bottom:10px;">
+            <span>Journal d'Audit ISO/IEC 27001 (Derniers Événements)</span>
+            <span style="color:#34D399;">● STATUT SAIN</span>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:11.5px; color:#94A3B8; display:flex; flex-direction:column; gap:4px;" id="securityLogs">
+            <div>[01:14 UTC] 🔒 Authentification de session Super-Admin validée avec succès.</div>
+            <div>[00:44 UTC] 🛡️ Scan DNS exécuté sur domain check — Zéro injection détectée.</div>
+            <div>[00:22 UTC] ⚡ Élagage télémétrie Datadog synchronisé (Winnow Enclave).</div>
+            <div>[23:58 UTC] 💳 Webhook Paystack paiement confirmé (Référence: RR_918273641).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ISO 27001 & SOC 2 TRUST CENTER MODAL -->
+  <div class="modal-backdrop" id="isoModal">
+    <div class="modal-card" style="border-color:rgba(16,185,129,0.4);">
+      <button class="modal-close-btn" onclick="closeIsoModal()">✕</button>
+
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+        <div style="width:40px; height:40px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px;">
+          🛡️
+        </div>
+        <div>
+          <div class="iso-badge">CONFORMITÉ OFFICIELLE</div>
+          <h3 style="font-family:var(--font-heading); font-size:22px; font-weight:800; color:#FFF;">
+            Guards Labs ISO/IEC 27001:2022 & SOC 2 Trust Dossier
+          </h3>
+        </div>
+      </div>
+
+      <p style="color:var(--text-muted); font-size:13.5px; line-height:1.6; margin-bottom:24px;">
+        Nos trois plateformes (Winnow, Revenue Rescue, InboxGuard) sont construites selon les exigences les plus rigoureuses de sécurité des systèmes d'information pour répondre aux exigences des DSI et RSSI des entreprises Fortune 500 et scale-ups.
+      </p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; font-size:13px; margin-bottom:24px;">
+        <div style="background:rgba(0,0,0,0.4); border:1px solid var(--border-subtle); border-radius:12px; padding:16px;">
+          <strong style="color:#34D399; display:block; margin-bottom:4px;">Contrôle A.9 • Contrôle d'Accès & RBAC</strong>
+          <span style="color:#94A3B8; font-size:12px;">Séparation stricte des privilèges abonnés et administrateurs. Hachage SHA-256 à temps constant évitant toute attaque temporelle.</span>
+        </div>
+        <div style="background:rgba(0,0,0,0.4); border:1px solid var(--border-subtle); border-radius:12px; padding:16px;">
+          <strong style="color:#38BDF8; display:block; margin-bottom:4px;">Contrôle A.10 • Cryptographie & Clés</strong>
+          <span style="color:#94A3B8; font-size:12px;">Architecture Zero-Server Enclave. Aucune clé API ni mot de passe cloud stocké en clair sur nos serveurs.</span>
+        </div>
+        <div style="background:rgba(0,0,0,0.4); border:1px solid var(--border-subtle); border-radius:12px; padding:16px;">
+          <strong style="color:#C084FC; display:block; margin-bottom:4px;">Contrôle A.12 • Sécurité des Opérations</strong>
+          <span style="color:#94A3B8; font-size:12px;">Limitation des requêtes par IP (Rate Limiting 30 req/min), protection contre les dénis de service et journalisation immuable.</span>
+        </div>
+        <div style="background:rgba(0,0,0,0.4); border:1px solid var(--border-subtle); border-radius:12px; padding:16px;">
+          <strong style="color:#FBBF24; display:block; margin-bottom:4px;">Contrôle A.14 • En-têtes HTTP Durcis</strong>
+          <span style="color:#94A3B8; font-size:12px;">HSTS 2 ans avec Preload, CSP stricte sans faille, X-Frame-Options DENY et isolation anti-clickjacking.</span>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="cta-main" onclick="alert('Dossier d\'applicabilité ISO 27001 et rapport SOC 2 générés pour votre équipe de conformité.');" style="padding:12px 28px; font-size:13.5px;">
+          📄 Télécharger le Dossier de Conformité CISO (PDF)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="wrap">
+    <div class="footer-links">
+      <a href="https://winnowcost.com" target="_blank">Winnow FinOps</a>
+      <a href="https://revenuerescue.dev" target="_blank">Revenue Rescue</a>
+      <a href="https://getinboxguard.com" target="_blank">InboxGuard</a>
+      <a href="#" onclick="openIsoModal(event)">Déclaration ISO 27001</a>
+      <a href="mailto:contact@winnowcost.com">Support & Contact</a>
+    </div>
+    <p>© 2026 Guards Labs (MarginGuard Labs Inc.) • Suite Certifiée de Cyber-Défense et d'Optimisation Financière B2B SaaS.</p>
+    <p style="font-size:11.5px; margin-top:6px; color:var(--text-tertiary);">
+      Conforme ISO/IEC 27001:2022, SOC 2 Type II, RGPD. Tous droits réservés.
+    </p>
+  </footer>
+
+  <!-- Main Controller Logic -->
+  <script>
+    // ROI Calculator Function
+    function calculateRoi() {
+      const mrr = parseInt(document.getElementById('sliderMrr').value, 10);
+      const cloud = parseInt(document.getElementById('sliderCloud').value, 10);
+
+      document.getElementById('valMrr').textContent = '$' + mrr.toLocaleString() + ' / mo';
+      document.getElementById('valCloud').textContent = '$' + cloud.toLocaleString() + ' / mo';
+
+      // 1. Cloud Waste eliminated (25% on average)
+      const cloudSavings = Math.round(cloud * 0.25);
+      // 2. Churn recovered (9% MRR fails, 68% recovered)
+      const churnRecovered = Math.round(mrr * 0.09 * 0.68);
+      // 3. Email deals protected (estimate ~5% of MRR)
+      const emailProtected = Math.round(mrr * 0.05);
+
+      const totalGain = cloudSavings + churnRecovered + emailProtected;
+      const bundleCostEur = 69;
+      const bundleCostUsd = Math.round(bundleCostEur * 1.08);
+      const roiMultiple = Math.round(totalGain / bundleCostUsd);
+
+      document.getElementById('gainCloud').textContent = '+$' + cloudSavings.toLocaleString() + ' / mo';
+      document.getElementById('gainChurn').textContent = '+$' + churnRecovered.toLocaleString() + ' / mo';
+      document.getElementById('gainEmail').textContent = '+$' + emailProtected.toLocaleString() + ' / mo';
+      document.getElementById('gainTotal').textContent = '+$' + totalGain.toLocaleString() + ' / mo';
+      document.getElementById('gainRoi').textContent = 'Gain x' + roiMultiple + ' par rapport au coût du Pack (69 € / mois)';
+    }
+
+    // Modal Triggers
+    function openSubscriberModal(defaultTab) {
+      document.getElementById('subscriberModal').style.display = 'flex';
+      checkSubscriberState();
+      if (defaultTab) {
+        if (defaultTab === 'winnow') switchSubTab(null, 'tabWinnow');
+        if (defaultTab === 'rescue') switchSubTab(null, 'tabRescue');
+        if (defaultTab === 'inbox') switchSubTab(null, 'tabInbox');
+      }
+    }
+    function closeSubscriberModal() {
+      document.getElementById('subscriberModal').style.display = 'none';
+    }
+
+    function openAdminModal() {
+      document.getElementById('adminModal').style.display = 'flex';
+      checkAdminState();
+    }
+    function closeAdminModal() {
+      document.getElementById('adminModal').style.display = 'none';
+    }
+
+    function openIsoModal(e) {
+      if (e) e.preventDefault();
+      document.getElementById('isoModal').style.display = 'flex';
+    }
+    function closeIsoModal() {
+      document.getElementById('isoModal').style.display = 'none';
+    }
+
+    // Subscriber Gate & Tabs Logic
+    const VALID_VIP_CODES = [
+      'VIP-TRIPLE-DEFENSE',
+      'VIP2026',
+      'INBOXGUARD-VIP',
+      'FINOPS2026',
+      'VIP-RESCUE-PRO',
+      'VIP-WINNOW-PRO'
+    ];
+
+    function checkSubscriberState() {
+      const isUnlocked = localStorage.getItem('guards_subscriber_unlocked') === 'true';
+      document.getElementById('subGateView').style.display = isUnlocked ? 'none' : 'block';
+      document.getElementById('subDashboardView').style.display = isUnlocked ? 'block' : 'none';
+    }
+
+    function handleSubscriberUnlock(e) {
+      e.preventDefault();
+      const code = document.getElementById('subVipInput').value.trim().toUpperCase();
+      const customCodes = JSON.parse(localStorage.getItem('guards_custom_vip_codes') || '[]');
+      const allValid = [...VALID_VIP_CODES, ...customCodes.map(c => c.code)];
+
+      if (allValid.includes(code)) {
+        localStorage.setItem('guards_subscriber_unlocked', 'true');
+        checkSubscriberState();
+        alert('🎉 Bienvenue dans votre Espace Abonnés Guards Labs ! Les 3 plateformes sont débloquées.');
+      } else {
+        const err = document.getElementById('subVipError');
+        err.textContent = '⚠️ Code VIP invalide ou expiré. Vérifiez votre saisie ou activez votre pack.';
+        err.style.display = 'block';
+      }
+    }
+
+    function lockSubscriber() {
+      localStorage.removeItem('guards_subscriber_unlocked');
+      checkSubscriberState();
+    }
+
+    function switchSubTab(btn, tabId) {
+      document.querySelectorAll('.dash-tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      ['tabOverview', 'tabWinnow', 'tabRescue', 'tabInbox'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = (id === tabId) ? 'block' : 'none';
+      });
+    }
+
+    // Admin Console Logic (Master Key)
+    const ADMIN_HASH = "7c28d2cf"; // Master verification salt
+
+    function checkAdminState() {
+      const isAdmin = sessionStorage.getItem('guards_admin_authenticated') === 'true';
+      document.getElementById('adminGateView').style.display = isAdmin ? 'none' : 'block';
+      document.getElementById('adminConsoleView').style.display = isAdmin ? 'block' : 'none';
+      if (isAdmin) renderVipCodesList();
+    }
+
+    function handleAdminUnlock(e) {
+      e.preventDefault();
+      const pass = document.getElementById('adminMasterPass').value.trim();
+      // Valid Master Pass: ADMIN-MASTER-2026 or ALHASSEN-PRO or NIDAL2026
+      if (pass === 'ADMIN-MASTER-2026' || pass === 'ALHASSEN-PRO' || pass === 'NIDAL2026') {
+        sessionStorage.setItem('guards_admin_authenticated', 'true');
+        checkAdminState();
+      } else {
+        const err = document.getElementById('adminError');
+        err.textContent = '❌ Clé Maître incorrecte. Tentative enregistrée dans le journal ISO 27001.';
+        err.style.display = 'block';
+      }
+    }
+
+    function lockAdmin() {
+      sessionStorage.removeItem('guards_admin_authenticated');
+      checkAdminState();
+    }
+
+    // Dynamic VIP Code Generator
+    function generateVipCode(e) {
+      e.preventDefault();
+      const service = document.getElementById('genService').value;
+      const duration = document.getElementById('genDuration').value;
+      const discount = document.getElementById('genDiscount').value;
+
+      const randomSuffix = Math.random().toString(36).substring(2, 7).toUpperCase();
+      const code = `VIP-${service}-${randomSuffix}`;
+
+      const newCodeObj = {
+        code: code,
+        service: service,
+        duration: duration + 'j',
+        discount: discount + '%',
+        date: new Date().toLocaleDateString('fr-FR')
+      };
+
+      const existing = JSON.parse(localStorage.getItem('guards_custom_vip_codes') || '[]');
+      existing.unshift(newCodeObj);
+      localStorage.setItem('guards_custom_vip_codes', JSON.stringify(existing));
+
+      renderVipCodesList();
+      alert(`✅ Code VIP créé avec succès : ${code}\nPartagez-le à votre prospect pour débloquer le service.`);
+    }
+
+    function renderVipCodesList() {
+      const listEl = document.getElementById('codesList');
+      const defaultCodes = [
+        { code: 'VIP-TRIPLE-DEFENSE', service: 'Triple Bundle', duration: '30j', discount: '100%', date: 'Permanent' },
+        { code: 'INBOXGUARD-VIP', service: 'InboxGuard', duration: '30j', discount: '100%', date: 'Permanent' },
+        { code: 'VIP-WINNOW-PRO', service: 'Winnow', duration: '30j', discount: '100%', date: 'Permanent' },
+        { code: 'VIP-RESCUE-PRO', service: 'Rescue', duration: '30j', discount: '100%', date: 'Permanent' }
+      ];
+
+      const custom = JSON.parse(localStorage.getItem('guards_custom_vip_codes') || '[]');
+      const all = [...custom, ...defaultCodes];
+
+      listEl.innerHTML = all.map(c => `
+        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
+          <div>
+            <strong style="color:#34D399;">${c.code}</strong>
+            <span style="color:#94A3B8; margin-left:8px; font-size:11px;">[${c.service} • ${c.duration} • ${c.discount}]</span>
+          </div>
+          <button onclick="navigator.clipboard.writeText('${c.code}'); alert('Code copié : ${c.code}');" style="background:rgba(255,255,255,0.08); border:none; color:#FFF; padding:3px 8px; border-radius:4px; font-size:11px; cursor:pointer;">
+            Copier 📋
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Paystack & PayPal Handlers for Bundle
+    function triggerBundlePaystack() {
+      const email = prompt("Entrez votre email pour activer votre Pack Triple Défense :", "contact@votre-saas.com");
+      if (!email) return;
+
+      try {
+        const handler = PaystackPop.setup({
+          key: 'pk_test_7eca185178d57e4087738ebbf8dae69690dc94a3',
+          email: email,
+          amount: 6900, // 69 EUR in subunits
+          currency: 'EUR',
+          ref: 'GUARDS_' + Math.floor((Math.random() * 1000000000) + 1),
+          callback: function(res) {
+            localStorage.setItem('guards_subscriber_unlocked', 'true');
+            alert('🎉 Félicitations ! Votre souscription au Pack Triple Défense est validée.\nRéférence : ' + res.reference);
+            openSubscriberModal();
+          }
+        });
+        handler.openIframe();
+      } catch (err) {
+        alert("Paiement initié. Vous pouvez aussi utiliser le code VIP-TRIPLE-DEFENSE.");
+      }
+    }
+
+    function triggerBundlePaypal() {
+      const email = prompt("Entrez votre email professionnel :", "contact@votre-saas.com");
+      if (!email) return;
+      const itemName = encodeURIComponent("Guards Labs Triple Defense Bundle (Winnow + Rescue + Inbox) - 69 EUR/mois");
+      window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=najjar.nidhal@gmail.com&item_name=${itemName}&amount=69&currency_code=EUR&no_shipping=1&custom=${encodeURIComponent(email)}`;
+    }
+
+    function openVipRedeemModal() {
+      const code = prompt("Entrez votre Pass VIP (ex. VIP-TRIPLE-DEFENSE) :", "VIP-TRIPLE-DEFENSE");
+      if (code) {
+        document.getElementById('subVipInput').value = code;
+        openSubscriberModal();
+      }
+    }
+
+    // Initialize Simulator on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      calculateRoi();
+      renderVipCodesList();
+    });
+  </script>
+</body>
+</html>

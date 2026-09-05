@@ -1,0 +1,91 @@
+{
+  "account_owner": "najjar.nidhal@gmail.com",
+  "version": "2026.1",
+  "gumloop_pipelines": [
+    {
+      "id": "pipe_inboxguard_v1",
+      "name": "InboxGuard 🛡️ — Audit DMARC/SPF & Envoi Diagnostic",
+      "description": "Scrape la configuration DNS d'un domaine prospect, génère un score de délivrabilité par IA (Claude 3.5 / GPT-4o) et envoie un email d'audit ultra-personnalisé.",
+      "nodes": [
+        {
+          "step": 1,
+          "name": "Input Node",
+          "type": "input",
+          "params": ["target_domain", "recipient_email"]
+        },
+        {
+          "step": 2,
+          "name": "DNS Scraper Node",
+          "type": "web_agent_or_http",
+          "target": "https://dns.google/resolve?name={target_domain}&type=TXT"
+        },
+        {
+          "step": 3,
+          "name": "LLM Analysis & Email Generator",
+          "type": "llm_completion",
+          "model": "claude-3-5-sonnet",
+          "prompt": "Tu es un expert en délivrabilité email. Analyse les enregistrements TXT suivants pour {target_domain}.\nVérifie SPF, DKIM et DMARC.\nSi DMARC est manquant ou en p=none, rédige un email d'alerte bienveillant de 3 phrases pour le dirigeant.\nFournis le code DNS exact à copier-coller."
+        },
+        {
+          "step": 4,
+          "name": "Resend / SMTP Dispatch",
+          "type": "email_send",
+          "to": "{recipient_email}",
+          "subject": "diagnostic délivrabilité urgent pour {target_domain}"
+        }
+      ]
+    },
+    {
+      "id": "pipe_winnow_v1",
+      "name": "Winnow ⚡ — Optimiseur de Logs Télémétrie Cloud",
+      "description": "Analyse les volumes de logs AWS CloudWatch / Datadog, détecte les 80% de logs DEBUG redondants et génère un plan de réduction des coûts.",
+      "nodes": [
+        {
+          "step": 1,
+          "name": "Input Log Payload",
+          "type": "input",
+          "params": ["log_volume_gb", "provider"]
+        },
+        {
+          "step": 2,
+          "name": "ROI Calculator & Rule Sampler",
+          "type": "llm_completion",
+          "model": "gpt-4o",
+          "prompt": "Calcule le coût mensuel pour {log_volume_gb} GB sur {provider}.\nCalcule une réduction de 35% grâce au filtre Smart Sampling de Winnow.\nGénère un tableau comparatif Avant/Après et un rapport ROI d'économie."
+        },
+        {
+          "step": 3,
+          "name": "Webhook Callback",
+          "type": "webhook_post",
+          "url": "https://getwinnow.com/api/webhooks/roi-report"
+        }
+      ]
+    },
+    {
+      "id": "pipe_revenue_rescue_v1",
+      "name": "Revenue Rescue 💳 — Récupération de Paiements Rejetés",
+      "description": "Réception des webhooks d'échecs de paiement Stripe/Paystack, enrichissement IA du profil client et envoi automatique du lien 1-Tap par SMS/WhatsApp/Email.",
+      "nodes": [
+        {
+          "step": 1,
+          "name": "Failed Payment Webhook",
+          "type": "webhook_trigger",
+          "params": ["customer_name", "amount", "provider"]
+        },
+        {
+          "step": 2,
+          "name": "Empathy Copywriting Engine",
+          "type": "llm_completion",
+          "model": "claude-3-5-sonnet",
+          "prompt": "Rédige une relance ultra-courte et bienveillante pour {customer_name} dont le paiement de {amount} FCFA vient d'échouer sur {provider}.\nInsère le lien de mise à jour sécurisé en 1-Tap."
+        },
+        {
+          "step": 3,
+          "name": "Multi-Channel Sender (WhatsApp / Email)",
+          "type": "multi_send",
+          "channels": ["whatsapp", "email"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "marginguard-vitrine",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MarginGuard Labs Autonomous System - 0-Card 24/7 Cloud Automation",
+  "scripts": {
+    "leads": "node scripts/daily-leads.mjs",
+    "test": "node scripts/daily-leads.mjs"
+  }
+}

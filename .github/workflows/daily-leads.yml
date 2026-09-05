@@ -1,0 +1,38 @@
+name: 🎯 MarginGuard Daily Leads & Prospecting Engine
+
+on:
+  schedule:
+    # Runs every single day at 08:00 AM UTC (100% Free, 0 Card, 0 Server)
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Allows 1-click manual trigger from GitHub anytime
+
+jobs:
+  run-lead-engine:
+    name: Generate 20 SaaS Leads & Send Telegram Report
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 🚀 Run Daily Leads Generator
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN || 'process.env.TELEGRAM_BOT_TOKEN' }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '7561160994' }}
+        run: |
+          node scripts/daily-leads.mjs
+
+      - name: 💾 Commit Daily Reports
+        run: |
+          git config --global user.name 'MarginGuard Automation'
+          git config --global user.email 'automation@marginguard.dev'
+          git add reports/
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore(leads): daily 20 saas leads report [skip ci]"
+          git push || echo "No changes or push skipped"
+
