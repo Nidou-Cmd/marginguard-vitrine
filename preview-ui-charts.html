@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MarginGuard Labs — Visualisation Interactive des Nouvelles UI & Charts 2.0</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-canvas: #03060E;
+      --bg-surface: rgba(12, 16, 26, 0.78);
+      --bg-elevated: rgba(18, 24, 40, 0.90);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(0, 240, 255, 0.28);
+      
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --text-dim: #64748B;
+      
+      --accent-cyan: #00F0FF;
+      --accent-emerald: #00E599;
+      --accent-amber: #F59E0B;
+      --accent-purple: #A855F7;
+      --accent-crimson: #EF4444;
+      --accent-blue: #3B82F6;
+
+      --font-display: 'Plus Jakarta Sans', sans-serif;
+      --font-text: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--bg-canvas);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.09) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.09) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(0, 229, 153, 0.04) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      font-family: var(--font-text);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 2rem 1.5rem;
+    }
+
+    .wrap { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+    .mono { font-family: var(--font-mono); }
+
+    /* Glass Panels */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(16, 22, 36, 0.82) 0%, rgba(10, 14, 24, 0.92) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      transition: all 0.25s var(--ease-spring);
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
+    }
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    }
+
+    /* Top Banner / Hero */
+    .hero-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding: 1.75rem 2rem;
+      background: linear-gradient(135deg, rgba(24, 32, 54, 0.85) 0%, rgba(12, 16, 28, 0.95) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.12);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .badge-cyan { background: rgba(0, 240, 255, 0.12); color: var(--accent-cyan); border: 1px solid rgba(0, 240, 255, 0.3); }
+    .badge-emerald { background: rgba(0, 229, 153, 0.12); color: var(--accent-emerald); border: 1px solid rgba(0, 229, 153, 0.3); }
+    .badge-purple { background: rgba(168, 85, 247, 0.12); color: #C084FC; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .badge-amber { background: rgba(245, 158, 11, 0.12); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    /* Buttons */
+    .btn {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.7rem 1.4rem;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s var(--ease-spring);
+      text-decoration: none;
+    }
+    .btn-glow-cyan {
+      background: linear-gradient(135deg, #00F0FF 0%, #0284C7 100%);
+      color: #03060E;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+    }
+    .btn-glow-cyan:hover {
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Tab Switcher */
+    .nav-tabs {
+      display: flex;
+      gap: 0.65rem;
+      background: rgba(12, 16, 26, 0.85);
+      padding: 0.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .tab-btn:hover { color: #FFF; background: rgba(255, 255, 255, 0.05); }
+    .tab-btn.active {
+      color: #FFF;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.18) 0%, rgba(59, 130, 246, 0.15) 100%);
+      border-color: rgba(0, 240, 255, 0.4);
+      box-shadow: 0 4px 16px rgba(0, 240, 255, 0.15);
+    }
+
+    /* Content Views */
+    .preview-view { display: none; flex-direction: column; gap: 2rem; animation: fadeIn 0.25s ease; }
+    .preview-view.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Layout Grids */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 1.75rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+
+    /* SVG Gauge Dial */
+    .gauge-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 1.5rem 0;
+    }
+    .gauge-circle {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+    .gauge-bg { stroke: rgba(255, 255, 255, 0.08); }
+    .gauge-val {
+      stroke: url(#cyan-green-grad);
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .gauge-label {
+      position: absolute;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Heatmap Grid */
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(24, 1fr);
+      gap: 3px;
+      margin-top: 1rem;
+    }
+    .heatmap-cell {
+      height: 18px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.04);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .heatmap-cell:hover { transform: scale(1.3); z-index: 10; border: 1px solid #FFF; }
+    .heat-lvl-1 { background: rgba(0, 229, 153, 0.25); }
+    .heat-lvl-2 { background: rgba(0, 229, 153, 0.55); }
+    .heat-lvl-3 { background: rgba(245, 158, 11, 0.65); }
+    .heat-lvl-4 { background: rgba(239, 68, 68, 0.85); box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+
+    /* Treemap Blocks */
+    .treemap-container {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr;
+      grid-template-rows: 150px 110px;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .treemap-block {
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .treemap-block:hover {
+      transform: scale(1.02);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Live Phone Simulation */
+    .phone-mockup {
+      max-width: 320px;
+      margin: 0 auto;
+      background: #0B0E14;
+      border: 2px solid #1E293B;
+      border-radius: 36px;
+      padding: 1rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 229, 153, 0.15);
+      position: relative;
+    }
+    .phone-notch {
+      width: 120px; height: 16px;
+      background: #1E293B;
+      border-radius: 0 0 12px 12px;
+      margin: 0 auto 1rem;
+    }
+    .wa-bubble {
+      background: #064E3B;
+      border: 1px solid #059669;
+      border-radius: 12px;
+      padding: 0.85rem;
+      font-size: 0.82rem;
+      color: #ECFDF5;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    /* Modal Command Palette */
+    .cmd-palette-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .cmd-palette-backdrop.open { display: flex; }
+    .cmd-palette-modal {
+      width: 100%;
+      max-width: 580px;
+      background: #0D1322;
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 240, 255, 0.2);
+    }
+    .cmd-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.25rem 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: #FFF;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+
+    <!-- 1. TOP HEADER & PROTOTYPE BANNER -->
+    <header class="hero-banner">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; margin-bottom:0.4rem;">
+          <h1 style="font-family:var(--font-display); font-size:1.65rem; font-weight:900; letter-spacing:-0.03em;">
+            🛡️ Visualisation UI &amp; Charts 2.0
+          </h1>
+          <span class="badge badge-cyan">LABS SANDBOX INTERACTIF</span>
+          <span class="badge badge-emerald">ZERO-SLOP DESIGN READY</span>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.9rem; max-width:760px;">
+          Testez en direct les composants graphiques haute conversion calibrés pour vos SaaS de Cybersécurité et FinOps. Observez le rendu visuel avant déploiement définitif.
+        </p>
+      </div>
+
+      <div style="display:flex; gap:0.75rem; align-items:center;">
+        <button class="btn btn-secondary" onclick="openCmdPalette()">
+          <span class="mono">Ctrl + K</span>
+          <span>Commandes</span>
+        </button>
+        <button class="btn btn-glow-cyan" onclick="validerDeploiement()">
+          <span>⚡ Valider &amp; Déployer</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. NAVIGATION PAR SAAS -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="tab-btn active" onclick="switchPreviewTab('master')" id="tab-master">
+        <span>🌐 1. Master Cockpit 360°</span>
+      </button>
+      <button class="tab-btn" onclick="switchPreviewTab('inboxguard')" id="tab-inboxguard">
+        <span>📧 2. GetInboxGuard (DMARC &amp; DNS)</span>
+      </button>
+      <button class="tab-btn" onclick="switchPreviewTab('rescue')" id="tab-rescue">
+        <span>💳 3. RevenueRescue (WhatsApp PCI)</span>
+      </button>
+      <button class="tab-btn" onclick="switchPreviewTab('winnow')" id="tab-winnow">
+        <span>☁️ 4. WinnowCost (FinOps &amp; IaC)</span>
+      </button>
+    </nav>
+
+    <!-- =========================================================================
+         TAB 1 : MASTER COCKPIT 360° (RADAR CHART & TELEMETRY)
+         ========================================================================= -->
+    <div class="preview-view active" id="view-master">
+      <div class="grid-2">
+        
+        <!-- Radar Chart 5-Axes -->
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+            <div>
+              <span class="badge badge-purple" style="margin-bottom:0.4rem;">POSTURE GLOBALE DE RÉSILIENCE</span>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; font-weight:800;">Radar Chart 5-Axes</h3>
+            </div>
+            <span class="mono" style="color:var(--accent-emerald); font-weight:700; font-size:1.1rem;">Score: 94.8%</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1.5rem;">
+            Synthèse en temps réel des 5 piliers critiques de vos SaaS : Sécurité DNS, Rétention Paiements, Efficience Cloud, Conformité PCI et Uptime.
+          </p>
+
+          <!-- SVG Canvas Radar Chart -->
+          <div style="display:flex; justify-content:center; align-items:center;">
+            <svg width="340" height="300" viewBox="0 0 340 300">
+              <!-- Radar Background Polygons -->
+              <polygon points="170,30 290,110 240,250 100,250 50,110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+              <polygon points="170,60 255,120 220,220 120,220 85,120" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+              <polygon points="170,90 220,130 200,190 140,190 120,130" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+              <!-- Axes Lines -->
+              <line x1="170" y1="150" x2="170" y2="30" stroke="rgba(255,255,255,0.15)" stroke-dasharray="2 2" />
+              <line x1="170" y1="150" x2="290" y2="110" stroke="rgba(255,255,255,0.15)" stroke-dasharray="2 2" />
+              <line x1="170" y1="150" x2="240" y2="250" stroke="rgba(255,255,255,0.15)" stroke-dasharray="2 2" />
+              <line x1="170" y1="150" x2="100" y2="250" stroke="rgba(255,255,255,0.15)" stroke-dasharray="2 2" />
+              <line x1="170" y1="150" x2="50" y2="110" stroke="rgba(255,255,255,0.15)" stroke-dasharray="2 2" />
+
+              <!-- Active Polygon Data Fill -->
+              <polygon points="170,40 280,115 225,240 105,245 65,115" 
+                       fill="rgba(0, 240, 255, 0.22)" stroke="#00F0FF" stroke-width="2.5">
+                <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite" />
+              </polygon>
+
+              <!-- Node Points -->
+              <circle cx="170" cy="40" r="5" fill="#00E599" stroke="#FFF" stroke-width="1.5" />
+              <circle cx="280" cy="115" r="5" fill="#00F0FF" stroke="#FFF" stroke-width="1.5" />
+              <circle cx="225" cy="240" r="5" fill="#A855F7" stroke="#FFF" stroke-width="1.5" />
+              <circle cx="105" cy="245" r="5" fill="#F59E0B" stroke="#FFF" stroke-width="1.5" />
+              <circle cx="65" cy="115" r="5" fill="#00F0FF" stroke="#FFF" stroke-width="1.5" />
+
+              <!-- Axis Labels -->
+              <text x="170" y="20" fill="#F8FAFC" font-size="11" font-weight="700" text-anchor="middle">SÉCURITÉ DNS (98%)</text>
+              <text x="298" y="115" fill="#94A3B8" font-size="10" font-weight="600">RÉTENTION MRR (92%)</text>
+              <text x="250" y="268" fill="#94A3B8" font-size="10" font-weight="600">PCI-DSS SAQ-A (99%)</text>
+              <text x="90" y="268" fill="#94A3B8" font-size="10" font-weight="600">CLOUD FINOPS (90%)</text>
+              <text x="42" y="115" fill="#94A3B8" font-size="10" font-weight="600" text-anchor="end">UPTIME SLA (99.9%)</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Telemetry Ticker & Operational Quick-Actions -->
+        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+          <div class="glass-card">
+            <h4 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; margin-bottom:1rem;">
+              ⚡ Télémétrie des Serveurs &amp; Daemons
+            </h4>
+            <div style="display:flex; flex-direction:column; gap:0.85rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem; background:rgba(255,255,255,0.02); border-radius:8px; border:1px solid var(--border-subtle);">
+                <div>
+                  <div style="font-weight:700; font-size:0.88rem;">Open-WA Dunning Gateway (Port 4850)</div>
+                  <div class="mono" style="font-size:0.72rem; color:var(--text-dim);">Task 275 • node scripts/openwa-gateway-service.mjs</div>
+                </div>
+                <span class="badge badge-emerald">ACTIF • EN LIGNE</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem; background:rgba(255,255,255,0.02); border-radius:8px; border:1px solid var(--border-subtle);">
+                <div>
+                  <div style="font-weight:700; font-size:0.88rem;">Cloudflare Email Routing (Centralisé)</div>
+                  <div class="mono" style="font-size:0.72rem; color:var(--text-dim);">ceo@marginguardlabs.com ➔ Destination Masquée</div>
+                </div>
+                <span class="badge badge-emerald">100% ROUTÉ</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem; background:rgba(255,255,255,0.02); border-radius:8px; border:1px solid var(--border-subtle);">
+                <div>
+                  <div style="font-weight:700; font-size:0.88rem;">Vercel Production Edge CDN</div>
+                  <div class="mono" style="font-size:0.72rem; color:var(--text-dim);">https://marginguard-vitrine.vercel.app</div>
+                </div>
+                <span class="badge badge-cyan">DÉPLOYÉ &amp; STABLE</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card" style="background:linear-gradient(135deg, rgba(0, 240, 255, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);">
+            <h4 style="font-family:var(--font-display); font-size:1.05rem; font-weight:800; margin-bottom:0.5rem;">
+              🎯 Impact Business Projeté
+            </h4>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:0.75rem;">
+              <div>
+                <div class="mono" style="font-size:1.6rem; font-weight:800; color:var(--accent-emerald);">+34.8%</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary);">Régularisation Stripe via WhatsApp</div>
+              </div>
+              <div>
+                <div class="mono" style="font-size:1.6rem; font-weight:800; color:var(--accent-cyan);">&lt; 3.2s</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary);">Temps d'audit DMARC DNS instantané</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2 : GETINBOXGUARD (360° GAUGE DIAL & STACKED DMARC AREA CHART)
+         ========================================================================= -->
+    <div class="preview-view" id="view-inboxguard">
+      <div class="grid-2">
+
+        <!-- 360° SVG Security Score Gauge Dial -->
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <div>
+              <span class="badge badge-emerald">DIAGNOSTIC TEMPS RÉEL</span>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; margin-top:0.3rem;">
+                360° Security Score Gauge
+              </h3>
+            </div>
+            <button class="btn btn-secondary" style="padding:0.4rem 0.8rem; font-size:0.75rem;" onclick="simulerScanDNS()">
+              <span>🔄 Relancer Scan</span>
+            </button>
+          </div>
+
+          <div class="gauge-box">
+            <svg width="220" height="220" viewBox="0 0 220 220">
+              <defs>
+                <linearGradient id="cyan-green-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00F0FF" />
+                  <stop offset="100%" stop-color="#00E599" />
+                </linearGradient>
+              </defs>
+              <!-- Background Circle Track -->
+              <circle cx="110" cy="110" r="86" stroke-width="14" fill="none" class="gauge-circle gauge-bg" />
+              <!-- Animated Foreground Value Circle -->
+              <circle id="gauge-bar" cx="110" cy="110" r="86" stroke-width="14" fill="none" 
+                      class="gauge-circle gauge-val" stroke-dasharray="540" stroke-dashoffset="35" />
+            </svg>
+            <div class="gauge-label">
+              <span class="mono" style="font-size:2.8rem; font-weight:900; letter-spacing:-0.04em;" id="gauge-score-txt">A+</span>
+              <span class="mono" style="font-size:0.9rem; font-weight:700; color:var(--accent-emerald);">100 / 100</span>
+              <span style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">Latence DNS: 18ms</span>
+            </div>
+          </div>
+
+          <!-- DNS Record Pills -->
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.6rem; margin-top:1rem;">
+            <div style="background:rgba(0, 229, 153, 0.1); border:1px solid rgba(0, 229, 153, 0.3); border-radius:8px; padding:0.6rem; text-align:center;">
+              <div class="mono" style="font-size:0.75rem; font-weight:800; color:var(--accent-emerald);">MX</div>
+              <div style="font-size:0.68rem; color:var(--text-secondary);">3 Détectés</div>
+            </div>
+            <div style="background:rgba(0, 229, 153, 0.1); border:1px solid rgba(0, 229, 153, 0.3); border-radius:8px; padding:0.6rem; text-align:center;">
+              <div class="mono" style="font-size:0.75rem; font-weight:800; color:var(--accent-emerald);">SPF</div>
+              <div style="font-size:0.68rem; color:var(--text-secondary);">Strict Validé</div>
+            </div>
+            <div style="background:rgba(0, 229, 153, 0.1); border:1px solid rgba(0, 229, 153, 0.3); border-radius:8px; padding:0.6rem; text-align:center;">
+              <div class="mono" style="font-size:0.75rem; font-weight:800; color:var(--accent-emerald);">DMARC</div>
+              <div style="font-size:0.68rem; color:var(--text-secondary);">p=reject</div>
+            </div>
+            <div style="background:rgba(0, 240, 255, 0.1); border:1px solid rgba(0, 240, 255, 0.3); border-radius:8px; padding:0.6rem; text-align:center;">
+              <div class="mono" style="font-size:0.75rem; font-weight:800; color:var(--accent-cyan);">BIMI</div>
+              <div style="font-size:0.68rem; color:var(--text-secondary);">Certifié VMC</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 30-Day Stacked DMARC Area Chart -->
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <div>
+              <span class="badge badge-cyan">SÉCURITÉ FLUX EMAIL</span>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; margin-top:0.3rem;">
+                Trafic DMARC 30 Jours
+              </h3>
+            </div>
+            <div style="display:flex; gap:0.5rem; font-size:0.75rem;">
+              <span style="display:flex; align-items:center; gap:0.3rem; color:#00E599;"><span style="width:8px; height:8px; background:#00E599; border-radius:2px;"></span>Pass (94.2%)</span>
+              <span style="display:flex; align-items:center; gap:0.3rem; color:#F59E0B;"><span style="width:8px; height:8px; background:#F59E0B; border-radius:2px;"></span>SoftFail (4.1%)</span>
+              <span style="display:flex; align-items:center; gap:0.3rem; color:#EF4444;"><span style="width:8px; height:8px; background:#EF4444; border-radius:2px;"></span>Bloqués (1.7%)</span>
+            </div>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem;">
+            Historique dynamique d'authentification des messages sortants et blocage des tentatives de phishing.
+          </p>
+
+          <!-- SVG Stacked Area Graph -->
+          <div style="margin-top:1.5rem; position:relative;">
+            <svg width="100%" height="180" viewBox="0 0 500 180" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="area-pass" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#00E599" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#00E599" stop-opacity="0.0" />
+                </linearGradient>
+                <linearGradient id="area-reject" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#EF4444" stop-opacity="0.4" />
+                  <stop offset="100%" stop-color="#EF4444" stop-opacity="0.0" />
+                </linearGradient>
+              </defs>
+
+              <!-- Grid Lines -->
+              <line x1="0" y1="45" x2="500" y2="45" stroke="rgba(255,255,255,0.06)" />
+              <line x1="0" y1="90" x2="500" y2="90" stroke="rgba(255,255,255,0.06)" />
+              <line x1="0" y1="135" x2="500" y2="135" stroke="rgba(255,255,255,0.06)" />
+
+              <!-- Pass Area (Green) -->
+              <path d="M0,130 Q80,100 150,115 T300,80 T420,70 T500,65 L500,180 L0,180 Z" fill="url(#area-pass)" />
+              <path d="M0,130 Q80,100 150,115 T300,80 T420,70 T500,65" fill="none" stroke="#00E599" stroke-width="2.5" />
+
+              <!-- Reject Spikes (Red) -->
+              <path d="M0,170 Q120,165 240,150 T360,120 T440,160 T500,168 L500,180 L0,180 Z" fill="url(#area-reject)" />
+              <path d="M0,170 Q120,165 240,150 T360,120 T440,160 T500,168" fill="none" stroke="#EF4444" stroke-width="2" />
+            </svg>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-dim); margin-top:0.5rem;" class="mono">
+              <span>Il y a 30j</span>
+              <span>Il y a 15j</span>
+              <span>Aujourd'hui</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 3 : REVENUERESCUE (SANKEY FUNNEL & WHATSAPP PHONE SIMULATION)
+         ========================================================================= -->
+    <div class="preview-view" id="view-rescue">
+      <div class="grid-2">
+
+        <!-- Sankey Funnel & Comparison Chart -->
+        <div class="glass-card">
+          <span class="badge badge-purple">DUNNING VÉLOCITÉ PCI-DSS SAQ-A</span>
+          <h3 style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; margin-top:0.3rem; margin-bottom:1rem;">
+            Entonnoir de Récupération de Churn
+          </h3>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1.5rem;">
+            Comparaison concrète de vélocité entre l'email traditionnel et la relance instantanée Open-WA WhatsApp.
+          </p>
+
+          <!-- Velocity Comparison Bars -->
+          <div style="display:flex; flex-direction:column; gap:1.25rem;">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.4rem;">
+                <span style="font-weight:700; color:var(--accent-emerald);">⚡ Open-WA WhatsApp (RevenueRescue)</span>
+                <span class="mono" style="font-weight:800; color:var(--accent-emerald);">2.1 Heures • 51.4% Récupéré</span>
+              </div>
+              <div style="height:12px; background:rgba(255,255,255,0.06); border-radius:6px; overflow:hidden;">
+                <div style="width:85%; height:100%; background:linear-gradient(90deg, #00F0FF, #00E599); border-radius:6px;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.4rem;">
+                <span style="font-weight:600; color:var(--text-dim);">✉️ Emails de relance classiques (Stripe)</span>
+                <span class="mono" style="color:var(--text-dim);">5.4 Jours • 12.8% Récupéré</span>
+              </div>
+              <div style="height:12px; background:rgba(255,255,255,0.06); border-radius:6px; overflow:hidden;">
+                <div style="width:25%; height:100%; background:rgba(255,255,255,0.2); border-radius:6px;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Revenue Numbers Box -->
+          <div style="margin-top:2rem; padding:1.2rem; background:rgba(168, 85, 247, 0.08); border:1px solid rgba(168, 85, 247, 0.25); border-radius:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.75rem; color:var(--text-secondary);">MRR Sauvé ce mois-ci :</div>
+                <div class="mono" style="font-size:1.8rem; font-weight:800; color:#FFF;">6 370 €</div>
+              </div>
+              <span class="badge badge-emerald">+386% ROI IMMÉDIAT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Phone Mockup -->
+        <div class="glass-card" style="display:flex; flex-direction:column; align-items:center;">
+          <span class="badge badge-emerald" style="margin-bottom:1rem;">APERÇU SMARTPHONE CLIENT</span>
+          
+          <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem; border-bottom:1px solid #1E293B; padding-bottom:0.5rem;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#059669; display:flex; align-items:center; justify-content:center; font-size:0.7rem;">🛡️</div>
+              <div>
+                <div style="font-size:0.78rem; font-weight:700;">RevenueRescue Official</div>
+                <div style="font-size:0.65rem; color:#10B981;">Compte Professionnel Vérifié</div>
+              </div>
+            </div>
+
+            <!-- WhatsApp Bubble -->
+            <div class="wa-bubble">
+              <strong>Bonjour Marc,</strong><br>
+              Votre abonnement SaaS n'a pas pu être renouvelé (carte expirée).<br><br>
+              🔒 <em>Lien sécurisé PCI-DSS SAQ-A :</em><br>
+              <a href="#" style="color:#34D399; font-weight:700; word-break:break-all; text-decoration:underline;">
+                https://revenuerescue.dev/update-card.html?token=sec_98f42a
+              </a>
+              <div style="text-align:right; font-size:0.65rem; color:#A7F3D0; margin-top:0.3rem;">14:32 ✓✓</div>
+            </div>
+
+            <button class="btn btn-glow-cyan" style="width:100%; justify-content:center; font-size:0.75rem; padding:0.5rem;" onclick="alert('Simulation: Clic client vers le formulaire Stripe Elements isolé SAQ-A')">
+              <span>💳 Simuler Clic Client</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4 : WINNOWCOST (OBSERVABILITY TREEMAP & LOG HEATMAP)
+         ========================================================================= -->
+    <div class="preview-view" id="view-winnow">
+      <div class="grid-2">
+
+        <!-- Treemap d'Observabilité -->
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-amber">RÉPARTITION DES COÛTS CLOUD</span>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; margin-top:0.3rem;">
+                Treemap FinOps Observabilité
+              </h3>
+            </div>
+            <span class="mono" style="font-weight:700; color:var(--accent-amber);">Facture: 4 820 €/m</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:0.4rem;">
+            Ventilation visuelle des coûts Datadog/CloudWatch identifiés via analyse IaC offline sans clés API.
+          </p>
+
+          <!-- Interactive Treemap Container -->
+          <div class="treemap-container">
+            <div class="treemap-block" style="background:rgba(239, 68, 68, 0.15); border-color:rgba(239, 68, 68, 0.35);">
+              <div>
+                <div style="font-weight:700; font-size:0.88rem; color:#FCA5A5;">Custom Metrics Datadog</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary);">42% du total (Surfacturation)</div>
+              </div>
+              <div class="mono" style="font-size:1.3rem; font-weight:800; color:#EF4444;">2 024 €</div>
+            </div>
+
+            <div class="treemap-block" style="background:rgba(245, 158, 11, 0.15); border-color:rgba(245, 158, 11, 0.35);">
+              <div>
+                <div style="font-weight:700; font-size:0.88rem; color:#FDE68A;">Logs Non Compressés</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary);">33% du total</div>
+              </div>
+              <div class="mono" style="font-size:1.3rem; font-weight:800; color:#F59E0B;">1 590 €</div>
+            </div>
+
+            <div class="treemap-block" style="grid-column:span 2; background:rgba(0, 240, 255, 0.12); border-color:rgba(0, 240, 255, 0.3);">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:700; font-size:0.88rem; color:#BAE6FD;">Traces APM &amp; Ingestion Standard</div>
+                  <div style="font-size:0.75rem; color:var(--text-secondary);">25% du total (Conforme)</div>
+                </div>
+                <div class="mono" style="font-size:1.3rem; font-weight:800; color:#38BDF8;">1 206 €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 24/7 Log Ingestion Anomaly Heatmap -->
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-cyan">ANOMALIES VOLUMÉTRIQUES</span>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; margin-top:0.3rem;">
+                Heatmap Horaires d'Ingestion (7j × 24h)
+              </h3>
+            </div>
+            <span class="badge badge-amber">1 PIC ANORMAL DÉTECTÉ</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:0.4rem;">
+            Chaque case représente une heure. Les cases rouges révèlent des boucles de log de debug inutiles.
+          </p>
+
+          <!-- Heatmap Container -->
+          <div style="margin-top:1.25rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-dim);" class="mono">
+              <span>00:00 UTC</span>
+              <span>12:00 UTC</span>
+              <span>23:00 UTC</span>
+            </div>
+            
+            <div class="heatmap-grid" id="heatmap-container">
+              <!-- Dynamically populated 7 rows of 24 cells -->
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border-subtle);">
+              <div style="font-size:0.8rem; color:var(--text-secondary);">
+                🎯 <strong>Économie immédiate :</strong> Bloquer la boucle Mardi 03:00 UTC = <strong style="color:var(--accent-emerald);">-640 €/mois</strong>
+              </div>
+              <button class="btn btn-glow-cyan" style="padding:0.4rem 0.9rem; font-size:0.75rem;" onclick="alert('Règle de filtrage IaC Terraform générée instantanément!')">
+                <span>Générer Correctif IaC</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER AVEC CONFIRMATION DÉCISIONNELLE -->
+    <footer style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-subtle); padding-top:1.5rem; flex-wrap:wrap; gap:1rem;">
+      <div style="display:flex; align-items:center; gap:0.75rem;">
+        <span class="mono" style="font-size:0.82rem; color:var(--text-dim);">MarginGuard Labs • 2026</span>
+        <span style="color:var(--text-dim);">|</span>
+        <a href="mailto:ceo@marginguardlabs.com" class="mono" style="color:var(--text-secondary); text-decoration:none; font-size:0.82rem;">ceo@marginguardlabs.com</a>
+      </div>
+
+      <div style="display:flex; gap:1rem; align-items:center;">
+        <span style="font-size:0.85rem; color:var(--text-secondary);">Êtes-vous prêt à déployer ces UI sur vos sites ?</span>
+        <button class="btn btn-glow-cyan" onclick="validerDeploiement()">
+          <span>✅ Oui, On Déploie ces UIs !</span>
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- COMMAND PALETTE MODAL (CTRL + K) -->
+  <div class="cmd-palette-backdrop" id="cmd-modal" onclick="closeCmdPalette(event)">
+    <div class="cmd-palette-modal" onclick="event.stopPropagation()">
+      <input type="text" class="cmd-input" placeholder="Tapez une commande (ex: audit, dunning, vercel)..." id="cmd-input" autofocus>
+      <div style="padding:1rem; display:flex; flex-direction:column; gap:0.5rem; font-size:0.85rem;">
+        <div style="padding:0.6rem; border-radius:6px; cursor:pointer; background:rgba(255,255,255,0.04);" onclick="switchPreviewTab('inboxguard'); closeCmdPalette();">
+          🔍 <strong>Audit DNS &amp; DMARC</strong> — Ouvrir la jauge GetInboxGuard
+        </div>
+        <div style="padding:0.6rem; border-radius:6px; cursor:pointer; background:rgba(255,255,255,0.04);" onclick="switchPreviewTab('rescue'); closeCmdPalette();">
+          💬 <strong>WhatsApp Dunning</strong> — Simuler relance RevenueRescue
+        </div>
+        <div style="padding:0.6rem; border-radius:6px; cursor:pointer; background:rgba(255,255,255,0.04);" onclick="switchPreviewTab('winnow'); closeCmdPalette();">
+          ☁️ <strong>FinOps IaC</strong> — Inspecter anomalies Datadog
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE JS ENGINE -->
+  <script>
+    // Tab switching logic
+    function switchPreviewTab(tabKey) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.preview-view').forEach(view => view.classList.remove('active'));
+
+      const targetBtn = document.getElementById('tab-' + tabKey);
+      const targetView = document.getElementById('view-' + tabKey);
+
+      if (targetBtn) targetBtn.classList.add('active');
+      if (targetView) targetView.classList.add('active');
+    }
+
+    // Populate Heatmap Grid (7 days x 24 hours)
+    const heatmapContainer = document.getElementById('heatmap-container');
+    if (heatmapContainer) {
+      for (let day = 0; day < 7; day++) {
+        for (let hour = 0; hour < 24; hour++) {
+          const cell = document.createElement('div');
+          cell.className = 'heatmap-cell';
+          // Anomaly spike on Tuesday (day 2) hour 3
+          if (day === 2 && (hour >= 2 && hour <= 4)) {
+            cell.className += ' heat-lvl-4';
+            cell.title = `Mardi ${hour}:00 UTC — Anomalie Critique: Boucle de log non filtrée`;
+          } else if (hour >= 8 && hour <= 18) {
+            cell.className += ' heat-lvl-2';
+            cell.title = `Jour ${day + 1} ${hour}:00 UTC — Activité nominale`;
+          } else {
+            cell.className += ' heat-lvl-1';
+            cell.title = `Jour ${day + 1} ${hour}:00 UTC — Trafic faible`;
+          }
+          heatmapContainer.appendChild(cell);
+        }
+      }
+    }
+
+    // DNS Gauge Simulation
+    function simulerScanDNS() {
+      const bar = document.getElementById('gauge-bar');
+      const txt = document.getElementById('gauge-score-txt');
+      if (bar && txt) {
+        bar.style.strokeDashoffset = '400';
+        txt.textContent = '...';
+        setTimeout(() => {
+          bar.style.strokeDashoffset = '35';
+          txt.textContent = 'A+';
+        }, 600);
+      }
+    }
+
+    // Command Palette Logic
+    function openCmdPalette() {
+      document.getElementById('cmd-modal').classList.add('open');
+      document.getElementById('cmd-input').focus();
+    }
+    function closeCmdPalette() {
+      document.getElementById('cmd-modal').classList.remove('open');
+    }
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        openCmdPalette();
+      }
+      if (e.key === 'Escape') {
+        closeCmdPalette();
+      }
+    });
+
+    // Final Decision Action
+    function validerDeploiement() {
+      alert("🚀 DÉCISION ENREGISTRÉE !\n\nLes templates UI et graphiques interactifs sont prêts à être fusionnés dans les codes sources principaux de GetInboxGuard, RevenueRescue et WinnowCost.");
+    }
+  </script>
+</body>
+</html>
