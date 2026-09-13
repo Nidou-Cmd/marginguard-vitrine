@@ -1,0 +1,444 @@
+/* ==========================================================================
+   GUARD LABS — STEALTH LUXURY & HAUTE HORLOGERIE DESIGN SYSTEM
+   Standard d'élite : Noir Obsidienne, Platine Brossé, Verre Fumé & Biseaux
+   ========================================================================== */
+
+:root {
+  /* FONDATIONS CHROMATIQUES LUXE */
+  --lux-bg-canvas: #040406;
+  --lux-bg-canvas-subtle: #08080C;
+  --lux-surface-glass: rgba(14, 16, 22, 0.68);
+  --lux-surface-glass-hover: rgba(22, 25, 36, 0.78);
+  --lux-surface-elevated: rgba(26, 30, 44, 0.85);
+
+  /* BORDURES SUB-PIXEL & BISEAUX LUMINEUX */
+  --lux-border-hairline: rgba(255, 255, 255, 0.08);
+  --lux-border-specular: rgba(255, 255, 255, 0.18);
+  --lux-rim-light: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  --lux-rim-light-prominent: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+
+  /* TYPOGRAPHIE MÉTALLIQUE */
+  --lux-text-pure: #FFFFFF;
+  --lux-text-platinum: #F1F5F9;
+  --lux-text-titanium: #94A3B8;
+  --lux-text-muted: #64748B;
+
+  /* ACCENTS DE PRESTIGE */
+  --lux-emerald-jade: #00E599;
+  --lux-emerald-glow: rgba(0, 229, 153, 0.22);
+  --lux-gold-champagne: #E5C07B;
+  --lux-gold-glow: rgba(229, 192, 123, 0.25);
+  --lux-sapphire-cyan: #00F0FF;
+  --lux-sapphire-glow: rgba(0, 240, 255, 0.22);
+  --lux-arctic-violet: #A855F7;
+  --lux-arctic-glow: rgba(168, 85, 247, 0.2);
+
+  /* PHYSIQUE & COURBES D'ANIMATION HAUTE PRÉCISION */
+  --lux-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --lux-transition-fast: all 0.2s var(--lux-ease);
+  --lux-transition-smooth: all 0.35s var(--lux-ease);
+}
+
+/* CARTE EN VERRE FUMÉ LUXUEUX AVEC BISEAU */
+.luxury-card {
+  background: var(--lux-surface-glass) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid var(--lux-border-hairline) !important;
+  border-radius: 20px !important;
+  box-shadow: 
+    var(--lux-rim-light),
+    0 24px 48px -12px rgba(0, 0, 0, 0.85) !important;
+  transition: var(--lux-transition-smooth) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.35) 50%, transparent 100%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.luxury-card:hover {
+  transform: translateY(-4px) !important;
+  border-color: var(--lux-border-specular) !important;
+  box-shadow: 
+    var(--lux-rim-light-prominent),
+    0 32px 64px -16px rgba(0, 0, 0, 0.95),
+    0 0 35px -5px rgba(255, 255, 255, 0.05) !important;
+}
+
+/* BOUTON LUXURY EN PLATINE MASSIF */
+.luxury-btn-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  background: linear-gradient(180deg, #FFFFFF 0%, #D8DBDF 100%) !important;
+  color: #07090E !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.015em !important;
+  padding: 13px 26px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 8px 24px -4px rgba(0, 0, 0, 0.6) !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: var(--lux-transition-fast) !important;
+}
+
+.luxury-btn-primary:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  background: #FFFFFF !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 12px 30px -4px rgba(255, 255, 255, 0.3) !important;
+}
+
+/* BOUTON LUXURY VERRE FUMÉ ET TITANE */
+.luxury-btn-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--lux-text-platinum) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  padding: 13px 24px !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--lux-border-hairline) !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: var(--lux-rim-light) !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: var(--lux-transition-fast) !important;
+}
+
+.luxury-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-color: var(--lux-border-specular) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--lux-rim-light-prominent) !important;
+}
+
+/* BADGE HAUTE HORLOGERIE */
+.luxury-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid var(--lux-border-hairline) !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  color: var(--lux-text-platinum) !important;
+  box-shadow: var(--lux-rim-light) !important;
+}
+
+.luxury-gem-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lux-emerald-jade);
+  box-shadow: 0 0 10px var(--lux-emerald-jade);
+  animation: luxPulse 2.8s infinite ease-in-out;
+}
+
+@keyframes luxPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 16px var(--lux-emerald-jade); }
+}
+
+/* TITRES MÉTALLIQUES BRUSHED PLATINUM */
+.luxury-title-metallic {
+  background: linear-gradient(180deg, #FFFFFF 15%, #94A3B8 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  letter-spacing: -0.035em !important;
+}
+
+/* ==========================================================================
+   SOVEREIGN ARCHITECTURAL STANDARDS : GUARD LABS XDR & PCI DUNNING
+   ========================================================================== */
+
+/* TREMOR / SHADCN KPI CARD */
+.tremor-kpi-card {
+  background: rgba(12, 16, 26, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 32px rgba(0,0,0,0.5);
+  backdrop-filter: blur(16px);
+  position: relative;
+}
+.tremor-kpi-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lux-text-titanium);
+  margin-bottom: 8px;
+}
+.tremor-kpi-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 800;
+  color: #FFF;
+  letter-spacing: -0.02em;
+}
+.tremor-kpi-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-top: 6px;
+}
+.tremor-kpi-delta.up { background: rgba(0, 229, 153, 0.12); color: #00E599; border: 1px solid rgba(0,229,153,0.3); }
+.tremor-kpi-delta.down { background: rgba(239, 68, 68, 0.12); color: #EF4444; border: 1px solid rgba(239,68,68,0.3); }
+
+/* GUARD LABS THREAT LEVEL BADGES */
+.guard-badge,
+.wazuh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.guard-badge.critical,
+.wazuh-badge.critical { background: rgba(239, 68, 68, 0.18); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+.guard-badge.high,
+.wazuh-badge.high { background: rgba(245, 158, 11, 0.18); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.4); }
+.guard-badge.medium,
+.wazuh-badge.medium { background: rgba(56, 189, 248, 0.18); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.4); }
+.guard-badge.info,
+.wazuh-badge.info { background: rgba(0, 229, 153, 0.18); color: #34D399; border: 1px solid rgba(0, 229, 153, 0.4); }
+
+/* OPENCOST ALLOCATION BAR */
+.opencost-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13.5px;
+}
+.opencost-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  margin: 0 16px;
+  overflow: hidden;
+}
+.opencost-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #38BDF8, #00E599);
+}
+
+/* LAGO DUNNING TIMELINE CADENCE */
+.lago-cadence-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.lago-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 229, 153, 0.12);
+  border: 1px solid rgba(0, 229, 153, 0.35);
+  color: #00E599;
+  font-weight: 800;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   GUARD LABS SOVEREIGN XDR & THREAT INTELLIGENCE DESIGN TOKENS
+   ========================================================================== */
+
+/* BRAND EXPOSURE EVIDENCE CARD */
+.evidence-card {
+  background: rgba(14, 16, 24, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(20px);
+  transition: var(--lux-transition-smooth);
+}
+.evidence-card:hover {
+  border-color: rgba(0, 240, 255, 0.35);
+  box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.15);
+}
+.evidence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.evidence-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.evidence-badge.suspicious {
+  background: rgba(239, 68, 68, 0.15);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+.evidence-badge.safe {
+  background: rgba(0, 229, 153, 0.15);
+  color: #00E599;
+  border: 1px solid rgba(0, 229, 153, 0.4);
+}
+.evidence-badge.monitoring {
+  background: rgba(245, 158, 11, 0.15);
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+/* VECTOR CAUSALITY STORYLINE TIMELINE */
+.storyline-container {
+  background: rgba(8, 10, 15, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.75rem;
+  margin: 1.5rem 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+.storyline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  position: relative;
+  margin-top: 1.25rem;
+}
+.storyline-step {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 1.2rem;
+  position: relative;
+  transition: var(--lux-transition-fast);
+}
+.storyline-step:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.04);
+}
+.storyline-step.compromised {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.04);
+  box-shadow: 0 0 25px -5px rgba(239, 68, 68, 0.2);
+}
+.storyline-step.defended {
+  border-color: rgba(0, 229, 153, 0.5);
+  background: rgba(0, 229, 153, 0.04);
+  box-shadow: 0 0 25px -5px rgba(0, 229, 153, 0.2);
+}
+.storyline-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+.storyline-step.compromised .storyline-icon {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+.storyline-step.defended .storyline-icon {
+  background: rgba(0, 229, 153, 0.15);
+  border: 1px solid rgba(0, 229, 153, 0.35);
+}
+
+/* COMPLIANCE REGULATORY MATRIX */
+.compliance-matrix {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 1rem;
+  font-size: 0.88rem;
+}
+.compliance-matrix th {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--lux-text-titanium);
+  padding: 10px 14px;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.compliance-matrix td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--lux-text-platinum);
+}
+.compliance-matrix tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* 1-CLICK REMEDIATION ACTIVE PLAYBOOK */
+.playbook-box {
+  background: linear-gradient(180deg, rgba(16, 20, 30, 0.85) 0%, rgba(10, 12, 18, 0.95) 100%);
+  border: 1px solid rgba(0, 229, 153, 0.25);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6);
+}
+.playbook-code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: #38BDF8;
+  word-break: break-all;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+
